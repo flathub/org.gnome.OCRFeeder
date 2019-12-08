@@ -6,3 +6,11 @@ sources:
     sha256: 5233664eadfa342c639b9b9977190d64ad7aca4edc51a966394d7e08e7f38a9f
 build-commands:
   - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" Pillow
+build-options:
+  arch:
+    aarch64:
+      ldflags: -L/usr/lib/aarch64-linux-gnu
+    arm:
+      ldflags: -L/usr/lib/arm-linux-gnueabihf
+    x86_64:
+      ldflags: -L/usr/lib/x86_64-linux-gnu
