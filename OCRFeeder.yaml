@@ -5,7 +5,7 @@ config-opts:
 sources:
   - type: git
     url: https://gitlab.gnome.org/GNOME/ocrfeeder.git
-    commit: 51483c4b625c42b9bc04b2056b903a431b080935
+    commit: 933beed101e8c3915bf7091c89628e5904b49d3a
   # Upstreamable patches
   # Update desktop file
   # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/1#1-update-desktop-file
@@ -27,6 +27,10 @@ sources:
   # https://gitlab.gnome.org/scx/ocrfeeder/commit/56d789d6b9610be8562abe0c6fa53d267111f832
   - type: patch
     path: ocrfeeder-0.8.1-update-translations.patch
+  # Update translations 2
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/6dddba9a1696881119a7698aabc1efdc97ec82bb
+  - type: patch
+    path: ocrfeeder-0.8.1-update-translations-2.patch
   # Update window icon
   # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/1#5-update-window-icon
   # https://gitlab.gnome.org/scx/ocrfeeder/commit/8d4a470c920369216ce4a09985917cfa6e8cdfd3
@@ -75,6 +79,10 @@ sources:
   # https://gitlab.gnome.org/scx/ocrfeeder/commit/7181042ca57086703577eac5212d3b1f41a4fafc
   - type: patch
     path: ocrfeeder-0.8.1-disable-unpaper-frame.patch
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/16
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/d6375c9f1a796804e75ae1876e3b36187d4cd9cd
+  - type: patch
+    path: ocrfeeder-0.8.1-fix-spellchecker-window.patch
 post-install:
   - icon_in="resources/icons/${FLATPAK_ID}.svg";
     icon_out="${FLATPAK_ID}.png";
@@ -85,15 +93,16 @@ post-install:
     done;
     install -p -D -m 0644 "${icon_in}" -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/";
 modules:
-  - shared-modules/python2.7/python-2.7.15.json
+  - shared-modules/python2.7/python-2.7.json
   - sane-backends.yaml
   - ghostscript.yaml
   - tesseract.yaml
   - ocrad.yaml
   - gocr.yaml
   - cuneiform.yaml
+  - goocanvas2.yaml
+  - djvulibre.yaml
   - unpaper.yaml
-  - goocanvas.yaml
   - enchant.yaml
   - enchant2.yaml
   - gtkspell.yaml
@@ -104,8 +113,4 @@ modules:
   - python2-lxml.yaml
   - python2-reportlab.yaml
   - python2-python-sane.yaml
-  - djvulibre.yaml
-  - noto-fonts.yaml
-  - noto-cjk.yaml
-  - noto-emoji.yaml
-  - jsmath-fonts.yaml
+  - fonts.yaml

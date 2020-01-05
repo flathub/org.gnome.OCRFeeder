@@ -3,8 +3,18 @@ buildsystem: simple
 sources:
   - type: git
     url: https://github.com/google/fonts.git
-    commit: 94dff3eaa9301b6640cccc63c56d6ff33d82882c
+    commit: 37c0f8e104143dbc57fbdffb835fbe6e84d8a465
+  # https://src.fedoraproject.org/rpms/jsmath-fonts/blob/3b09537bd15fff95734ea2813e110f5e51999f79/f/jsmath-fonts.spec#_7-8
+  - type: shell
+    commands:
+      - echo "Public domain" > "LICENSE";
+      - echo "Generated from MetaFont bitmap by mftrace 1.0.33, http://www.cs.uu.nl/~hanwen/mftrace/" >> "LICENSE";
 build-commands:
-  - find * -xtype f -iname 'jsMath*.ttf' | sort -uV | while read -r file; do
-    install -p -D -m 0644 "${file}" -t "${FLATPAK_DEST}/share/fonts/";
+  - |
+    regexp="^jsMath.*$";
+    find . -xtype f \( -iname '*.otf' -o -iname '*.ttc' -o -iname '*.ttf' -o -iname '*.ttx' \) -print0 | sort -zufV | while IFS= read -r -d '' file; do
+      f="$( basename "${file}" )";
+      [[ "${f%.*}" =~ ${regexp} ]] || continue;
+      [[ ! -f "${FLATPAK_DEST}/share/fonts/${f}" && ! -f "/usr/share/fonts/${f}" ]] || continue;
+      install -p -D -m 0644 "${file}" -t "${FLATPAK_DEST}/share/fonts/";
     done;

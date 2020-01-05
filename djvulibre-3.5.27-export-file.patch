@@ -1,0 +1,22 @@
+--- djvulibre-3.5.27/desktopfiles/Makefile.am
++++ djvulibre-3.5.27/desktopfiles/Makefile.am
+@@ -35,7 +35,7 @@ ${INKSCAPE} \
+ --without-gui \
+ --export-width=$${s} \
+ --export-height=$${s} \
+---export-png=$@ $<
++--export-file=$@ $<
+ endif
+ 
+ if HAVE_CONVERSION_CONVERT
+--- djvulibre-3.5.27/desktopfiles/Makefile.in
++++ djvulibre-3.5.27/desktopfiles/Makefile.in
+@@ -309,7 +309,7 @@ PNGICONS = \
+ @HAVE_CONVERSION_INKSCAPE_TRUE@--without-gui \
+ @HAVE_CONVERSION_INKSCAPE_TRUE@--export-width=$${s} \
+ @HAVE_CONVERSION_INKSCAPE_TRUE@--export-height=$${s} \
+-@HAVE_CONVERSION_INKSCAPE_TRUE@--export-png=$@ $<
++@HAVE_CONVERSION_INKSCAPE_TRUE@--export-file=$@ $<
+ 
+ @HAVE_CONVERSION_RSVG_TRUE@convert_icons_process = \
+ @HAVE_CONVERSION_RSVG_TRUE@s=`echo $@ | sed -e 's/[a-z]*\([0-9]*\).*/\1/'`; \

@@ -8,7 +8,7 @@ config-opts:
   - --with-quantum-depth=16
 sources:
   - type: archive
-    url: https://downloads.sourceforge.net/graphicsmagick/GraphicsMagick-1.3.31.tar.xz
-    sha256: 096bbb59d6f3abd32b562fc3b34ea90d88741dc5dd888731d61d17e100394278
+    url: https://downloads.sourceforge.net/graphicsmagick/GraphicsMagick-1.3.34.tar.xz
+    sha256: df009d5173ed0d6a0c6457234256c5a8aeaace782afa1cbab015d5a12bd4f7a4
 cleanup:
   - /share/doc/GraphicsMagick/www

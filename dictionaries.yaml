@@ -2,8 +2,8 @@ name: dictionaries
 buildsystem: simple
 sources:
   - type: archive
-    url: https://github.com/LibreOffice/dictionaries/archive/libreoffice-6.2.0.2.tar.gz
-    sha256: 8562faa0c6c675d4bc6c26bf31714e8fd6aa0471f6e828e018b03fc59a712b22
+    url: https://github.com/LibreOffice/dictionaries/archive/libreoffice-6.4.0.1.tar.gz
+    sha256: 776d95df8637f0f3accc541fce38cae2a4f0d322ff59a86e6876dde3e07a3bda
   - type: file
     path: install-dicts.py
   - type: file

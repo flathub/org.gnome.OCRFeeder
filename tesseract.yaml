@@ -5,8 +5,8 @@ config-opts:
   - --enable-legacy
 sources:
   - type: archive
-    url: https://github.com/tesseract-ocr/tesseract/archive/4.0.0.tar.gz
-    sha256: a1f5422ca49a32e5f35c54dee5112b11b99928fc9f4ee6695cdc6768d69f61dd
+    url: https://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+    sha256: 2a66ff0d8595bff8f04032165e6c936389b1e5727c3ce5a27b3e059d218db1cb
   # The LSTM models (--oem 1) in these files have been updated to the integerized versions of tessdata_best on GitHub.
   # So, they should be faster but probably a little less accurate than tessdata_best.
   #- type: archive
@@ -26,13 +26,13 @@ sources:
   # The above url is temporarily unavailable. Switching to Git protocol instead.
   - type: git
     url: https://github.com/tesseract-ocr/tessdata_best.git
-    tag: 4.0.0
-    commit: 95593f0b017280f55c77c8a40765c53336de179d
+    #tag: 4.0.0
+    commit: c5e0a7294a5af6da255f77fd1c464c6f00fc1636
     dest: traineddata
   # Tweak location of tessdata folder
-  # https://src.fedoraproject.org/rpms/tesseract/raw/aef288d06803c7d7430aed1cc37fcff44f221d2c/f/tesseract_datadir.patch
+  # https://src.fedoraproject.org/rpms/tesseract/blob/343cdd3feb3beccfd9f45b20f2ed9a59785a39b0/f/tesseract_datadir.patch
   - type: patch
-    path: tesseract-4.0.0-datadir.patch
+    path: tesseract-4.1.1-datadir.patch
 post-install:
   - install -p -D -m 0644 "traineddata"/*.traineddata -t "${FLATPAK_DEST}/share/tesseract/tessdata/";
   - install -p -D -m 0644 "traineddata/script"/*.traineddata -t "${FLATPAK_DEST}/share/tesseract/tessdata/script/";

@@ -16,11 +16,16 @@ build-options:
       cppflags: -DPNG_ARM_NEON_OPT=0
 sources:
   - type: archive
-    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-9.26.tar.xz
-    sha256: 90ed475f37584f646e9ef829932b2525d5c6fc2e0147e8d611bc50aa0e718598
-  # Make sure dvipdf is being run securely
-  # https://src.fedoraproject.org/rpms/ghostscript/raw/40935870ead04e622940b8fcb26f6700c280a01a/f/ghostscript-9.23-100-run-dvipdf-securely.patch
+    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs950/ghostscript-9.50.tar.xz
+    sha256: db9bb0817b6f22974e6d5ad751975f346420c2c86a0afcfe6b4e09c47803e7d4
+  # Fix for CVE-2019-14869
+  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=485904772c5f
+  # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-cve-2019-14869.patch
   - type: patch
-    path: ghostscript-9.23-100-run-dvipdf-securely.patch
+    path: ghostscript-cve-2019-14869.patch
+  # Make sure dvipdf is being run securely
+  # https://src.fedoraproject.org/rpms/ghostscript/raw/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-9.23-100-run-dvipdf-securely.patch
+  - type: patch
+    path: ghostscript-9.50-run-dvipdf-securely.patch
 cleanup:
   - /share/doc

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# perl program to take a thesaurus structured text data file 
+# perl program to take a thesaurus structured text data file
 # and create the proper sorted index file (.idx)
 #
 # typically invoked as follows:
@@ -18,7 +18,7 @@ my $ne = 0;       # number of entries in index
 my @tindex=();    # the index itself
 my $foffset = 0;  # file position offset into thesaurus
 my $rec="";       # current string and related pieces
-my $rl=0;         # misc string length     
+my $rl=0;         # misc string length
 my $entry="";     # current word being processed
 my $nm=0;         # number of meaning for the current word
 my $meaning="";   # current meaning and synonyms
@@ -27,9 +27,9 @@ my $encoding;     # encoding used by text file
 
 # top line of thesaurus provides encoding
 $encoding=<STDIN>;
-$foffset = $foffset + length($encoding); 
+$foffset = $foffset + length($encoding);
 chomp($encoding);
-   
+
 # read thesaurus line by line
 # first line of every block is an entry and meaning count
 while ($rec=<STDIN>){
@@ -42,7 +42,7 @@ while ($rec=<STDIN>){
         $rl = $rl + length($meaning);
         chomp($meaning);
         $p++;
-    }       
+    }
     push(@tindex,"$entry|$foffset");
     $ne++;
     $foffset = $foffset + $rl;

@@ -1,25 +1,38 @@
 name: sane-backends
 config-opts:
   - --disable-saned
+  - --with-usb
 sources:
   - type: archive
-    url: https://gitlab.com/sane-project/backends/-/archive/RELEASE_1_0_27/backends-RELEASE_1_0_27.tar.gz
-    sha256: 4697959c6bf2efc2af3b24df53bf7c7f1e9086111e93dbada3ec1ed62426d53c
-  # Black vertical band in color and gray images with Canon LIDE 100 scanner (bug #1540370)
-  # https://src.fedoraproject.org/rpms/sane-backends/raw/49391f9f1a8e6d54b2117cff4f17b842d8eeef1e/f/sane-backends-canon-lide-100.patch
+    url: https://gitlab.com/sane-project/backends/-/archive/1.0.28/backends-1.0.28.tar.bz2
+    sha256: f66d4729d00e02aec4b04c65cf0c1c602571fda7039e4f8c943572c1f20af612
   - type: patch
-    path: sane-backends-canon-lide-100.patch
-  # Revert samsung patch from upstream
-  # upstream tracker: https://alioth.debian.org/tracker/index.php?func=detail&aid=315876&group_id=30186&atid=410366
-  # https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=b4a4aa9c04d755547aa82b881499fd7a6172bfc9
-  # https://bugzilla.altlinux.org/show_bug.cgi?id=34855#c5
-  # https://src.fedoraproject.org/rpms/sane-backends/raw/49391f9f1a8e6d54b2117cff4f17b842d8eeef1e/f/sane-backends-revert-samsung-patch.patch
+    path: sane-backends-1.0.28-ac-init.patch
+  # CanoScan LiDE scanners supported by genesys backend are not detected
+  # several canoscan models did not work due genesys backend rewritten, taken from upstream
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1758886
+  # https://src.fedoraproject.org/rpms/sane-backends/blob/d73c59b3095e2ba2b8c42dd73e6e6e0001e82aa7/f/0001-genesys-Make-sure-calib_reg-are-available-before-wri.patch
   - type: patch
-    path: sane-backends-revert-samsung-patch.patch
+    path: sane-backends-1.0.28-genesys-Make-sure-calib_reg-are-available-before-wri.patch
+  # Samsung C460 does not have JPEG support
+  # blacklist Samsung C460 for JPEG
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1760916
+  # https://src.fedoraproject.org/rpms/sane-backends/blob/d73c59b3095e2ba2b8c42dd73e6e6e0001e82aa7/f/sane-xerox-mfp-blacklist-C460-for-JPEG.patch
+  - type: patch
+    path: sane-backends-1.0.28-xerox-mfp-blacklist-C460-for-JPEG.patch
+  # Genesys aborts when accessing invalid vector index and built with GLIBCXX_ASSERTIONS
+  # glibcxx assert aborts genesys backend
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1761530
+  # https://src.fedoraproject.org/rpms/sane-backends/blob/d73c59b3095e2ba2b8c42dd73e6e6e0001e82aa7/f/sane-genesys-vector-glibcxxassert.patch
+  - type: patch
+    path: sane-backends-1.0.28-genesys-vector-glibcxxassert.patch
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
       - autoreconf -vfi;
 post-install:
-  - echo '127.0.0.1' > "${FLATPAK_DEST}/etc/sane.d/net.conf";
-  - echo 'net' > "${FLATPAK_DEST}/etc/sane.d/dll.conf";
+  - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
+  - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
+modules:
+  - shared-modules/udev/udev-175.json
+  - libusb.yaml
