@@ -20,6 +20,9 @@ finish-args:
   # for Append Project
   # for Export to ODT
   - --filesystem=home
+  # Network access
+  # for scanner access via net backend
+  - --share=network
   # Dconf access
   - --filesystem=xdg-run/dconf
   - --filesystem=~/.config/dconf:ro

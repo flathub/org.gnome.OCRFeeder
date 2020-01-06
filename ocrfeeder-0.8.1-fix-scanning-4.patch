@@ -1,0 +1,45 @@
+From 54fd37b71eb89cfb02b0d72e3eaf046f522c186e Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 21:02:41 +0100
+Subject: [PATCH] Fix scanner support #4
+
+Invalid scanner options lead to an unrecoverable error:
+Error scanning page
+
+Some scanners don't support the Resolution parameter at all.
+
+Supported modes may be vary across different scanners.
+Not all of them support the "Color" mode.
+For example, some of them support "Color24" or "Color48" instead.
+---
+ src/ocrfeeder/util/lib.py | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/src/ocrfeeder/util/lib.py b/src/ocrfeeder/util/lib.py
+index db60c75..8c60f7f 100644
+--- a/src/ocrfeeder/util/lib.py
++++ b/src/ocrfeeder/util/lib.py
+@@ -162,8 +162,18 @@ def obtainScanners():
+ def scan(device):
+     try:
+         scandev = sane.open(device)
+-        scandev.mode = 'color'
+-        scandev.resolution = 300
++        try:
++            scandev.mode = 'Color24'
++        except:
++            debug('Unable to set scanner mode to "Color24"')
++            try:
++                scandev.mode = 'Color'
++            except:
++                debug('Unable to set scanner mode to "Color". Using default')
++        try:
++            scandev.resolution = 300
++        except:
++            debug('Unable to set scanner resolution to 300 DPI. Using default.')
+         result = scandev.scan()
+         filename = tempfile.mktemp(suffix='.png')
+         result.save(filename, 'PNG')
+-- 
+2.24.1
+

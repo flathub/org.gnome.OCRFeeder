@@ -1,0 +1,32 @@
+From e14a01b6089c0cdfa78da47f71662b990f268b6b Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 19:54:35 +0100
+Subject: [PATCH] Fix scanner support #2
+
+Fix Scanner Chooser Dialog: unable to select any scanner.
+
+Call getSelectedDevice() before destroying ScannerChooserDialog.
+---
+ src/ocrfeeder/studio/studioBuilder.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
+index 43cb432..8b328a4 100644
+--- a/src/ocrfeeder/studio/studioBuilder.py
++++ b/src/ocrfeeder/studio/studioBuilder.py
+@@ -202,10 +202,10 @@ class Studio:
+             Gdk.threads_enter()
+             response = scanner_chooser_dialog.run()
+             Gdk.threads_leave()
+-            scanner_chooser_dialog.destroy()
+             if response == Gtk.ResponseType.ACCEPT:
+                 device = scanner_chooser_dialog.getSelectedDevice()
+-            else:
++            scanner_chooser_dialog.destroy()
++            if response != Gtk.ResponseType.ACCEPT:
+                 return
+         elif len(devices) == 1:
+             device = devices[0][0]
+-- 
+2.24.1
+

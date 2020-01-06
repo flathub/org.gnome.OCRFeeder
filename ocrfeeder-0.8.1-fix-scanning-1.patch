@@ -1,0 +1,31 @@
+From 8cffb0f25215af072c4fe7e308de4830ad7ccc60 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 19:27:13 +0100
+Subject: [PATCH] Fix scanner support #1
+
+Gtk.Box.pack_start() takes exactly 5 non-keyword arguments.
+It seems that the default arguments have been removed.
+https://stackoverflow.com/a/17354844
+---
+ src/ocrfeeder/studio/widgetPresenter.py | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/ocrfeeder/studio/widgetPresenter.py b/src/ocrfeeder/studio/widgetPresenter.py
+index 245dde2..5c06be2 100644
+--- a/src/ocrfeeder/studio/widgetPresenter.py
++++ b/src/ocrfeeder/studio/widgetPresenter.py
+@@ -39,6 +39,11 @@ import Queue
+ import time
+ _ = gettext.gettext
+ 
++orig_pack_start = Gtk.Box.pack_start
++def pack_start(self, child, expand=True, fill=True, padding=0):
++    orig_pack_start(self, child, expand, fill, padding)
++Gtk.Box.pack_start = pack_start
++
+ class MainWindow(Gtk.Window):
+ 
+     def __init__(self):
+-- 
+2.24.1
+
