@@ -60,8 +60,12 @@ def handle_file(filename):
             print ("Unknown format %s" % format)
             continue
 
-        full_dest = "/app/share/" + dest + "/"
+        install_root = os.environ.get('FLATPAK_DEST', '/app')
+        data_dir = install_root + "/" + "share"
+        full_dest = data_dir + "/" + "dictionaries" + "/" + lang + "/" + dest + "/"
+        symlink_dest = data_dir + "/" + dest + "/"
         os.makedirs(full_dest, exist_ok = True)
+        os.makedirs(symlink_dest, exist_ok = True)
 
         for file in props['Locations']:
             if format == 'DICT_THES' and file.endswith(".dat") and os.path.isfile(file):
@@ -83,6 +87,11 @@ def handle_file(filename):
             full_dest_file = full_dest + basename
             print (" copy %s to %s" % (file, full_dest_file))
             shutil.copyfile(file, full_dest_file)
+            for loc in props['Locales']:
+                symlink = symlink_dest + prefix + loc.replace("-", "_")+suffix+ext
+                if symlink != full_dest_file:
+                    print (" symlink %s to %s" % (symlink, full_dest_file))
+                    os.symlink(os.path.relpath(full_dest_file, os.path.dirname(symlink)), symlink)
 
 for i in sys.argv[1:]:
     handle_file(i)

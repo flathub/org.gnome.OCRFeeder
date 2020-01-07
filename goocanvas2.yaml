@@ -1,4 +1,4 @@
-name: goocanvas
+name: goocanvas2
 rm-configure: true
 config-opts:
   - --enable-shared

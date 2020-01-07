@@ -1,0 +1,13 @@
+diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
+index 43cb432..2e7e110 100644
+--- a/src/ocrfeeder/studio/studioBuilder.py
++++ b/src/ocrfeeder/studio/studioBuilder.py
+@@ -195,7 +195,7 @@ class Studio:
+     def __obtainScannersFinishedCb(self, dialog, devices, error):
+         dialog.destroy()
+         device = None
+-        if len(devices) > 1:
++        if len(devices) >= 1:
+             scanner_chooser_dialog = widgetPresenter.ScannerChooserDialog(\
+                                                     self.main_window,
+                                                     devices)

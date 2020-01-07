@@ -2,8 +2,8 @@ name: python2-reportlab
 buildsystem: simple
 sources:
   - type: file
-    url: https://files.pythonhosted.org/packages/6d/b5/495011623878f1000a2bfa62fa54c3b491071f0c77062dcd1bd86e2b9764/reportlab-3.5.13.tar.gz
-    sha256: 6116e750f98018febc08dfee6df20446cf954adbcfa378d2c703d56c8864aff3
+    url: https://files.pythonhosted.org/packages/9b/e0/97b334f0e6a805c921ac369a153cea6ea822787a1d8247c7e65b1386c520/reportlab-3.5.32.tar.gz
+    sha256: 83ef44936ef4e9c432d62bc2b72ec8d772b87af319d123e827a72e9b6884c851
 build-commands:
   - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" reportlab
 modules:

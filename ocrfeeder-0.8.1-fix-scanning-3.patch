@@ -1,0 +1,27 @@
+From a35ec19ff76778dadbfa7df3a1f39ae94f3de7a1 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 20:26:31 +0100
+Subject: [PATCH] Fix scanner support #3
+
+Fix __scanFinishedCb().
+Need to specify the parent window.
+---
+ src/ocrfeeder/studio/studioBuilder.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
+index 8b328a4..1a6ca36 100644
+--- a/src/ocrfeeder/studio/studioBuilder.py
++++ b/src/ocrfeeder/studio/studioBuilder.py
+@@ -233,7 +233,7 @@ class Studio:
+             self.__addImagesToReviewer([image_path])
+             Gdk.threads_leave()
+         else:
+-            error = widgetPresenter.SimpleDialog(\
++            error = widgetPresenter.SimpleDialog(self.main_window,
+                                              _("Error scanning page"),
+                                              _("Error"),
+                                              'warning')
+-- 
+2.24.1
+

@@ -1,0 +1,44 @@
+From d6375c9f1a796804e75ae1876e3b36187d4cd9cd Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Sat, 4 Jan 2020 18:10:13 +0100
+Subject: [PATCH] Fix spell checker window
+
+Fixes GNOME/ocrfeeder#16
+---
+ src/ocrfeeder/studio/widgetPresenter.py | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/ocrfeeder/studio/widgetPresenter.py b/src/ocrfeeder/studio/widgetPresenter.py
+index 07ddddd..245dde2 100644
+--- a/src/ocrfeeder/studio/widgetPresenter.py
++++ b/src/ocrfeeder/studio/widgetPresenter.py
+@@ -2063,10 +2063,10 @@ class SpellCheckerDialog():
+     def __init__(self, parent, current_reviewer, language):
+         self.builder = Gtk.Builder()
+         self.builder.add_from_file(OCRFEEDER_SPELLCHECKER_UI)
+-        self = self.builder.get_object('check_spelling_window')
+-        self.set_transient_for(parent)
++        self.window = self.builder.get_object('check_spelling_window')
++        self.window.set_transient_for(parent)
+         self.builder.connect_signals(self)
+-        self.present()
++        self.window.present()
+         self.reviewer = current_reviewer
+         self.text = self.reviewer.editor.box_editor.getText()
+         self.dictButtons = {'change_button':self.builder.get_object('change_button'),
+@@ -2135,10 +2135,10 @@ class SpellCheckerDialog():
+         self.__next()
+ 
+     def close_button_clicked_cb(self, widget):
+-        self.destroy()
++        self.window.destroy()
+ 
+     def check_spelling_window_delete_event_cb(self, widget, data):
+-        self.destroy()
++        self.window.destroy()
+ 
+     def __set_no_more(self):
+         self.misspelled_word.set_text('')
+-- 
+2.24.1
+

@@ -1,62 +1,76 @@
 name: netpbm
 sources:
   #- type: archive
-  #  url: https://downloads.sourceforge.net/netpbm/netpbm-10.47.71.tgz
-  #  sha256: f3ca9caff0172b52ed29d7893c8e7bf6d0daf25be4e9c922b2a410e248293dda
+  #  url: https://downloads.sourceforge.net/netpbm/netpbm-10.73.30.tgz
+  #  sha256: 623b6829464eb6037ec65a14d952bcb8d6c835b7bc7f228888de617ab4e3b8c4
   - type: svn
     url: https://svn.code.sf.net/p/netpbm/code/advanced
-    revision: '3466'
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-security-scripts.patch
+    # 10.88.00
+    #revision: '3695'
+    # 10.88.02
+    #revision: '3719'
+    # 10.89.00
+    revision: '3723'
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-security-scripts.patch
   - type: patch
     path: netpbm-security-scripts.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-security-code.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-security-code.patch
   - type: patch
     path: netpbm-security-code.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-ppmfadeusage.patch
+    # Hunk #1 succeeded at 441 (offset -1 lines).
+    # The next patch would create the file lib/pm.h.orig,
+    # which already exists!  Assume -R? [n]
+    options:
+      - --no-backup-if-mismatch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-ppmfadeusage.patch
   - type: patch
     path: netpbm-ppmfadeusage.patch
   # https://bugzilla.redhat.com/show_bug.cgi?id=1419545
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-CVE-2017-2587.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-CVE-2017-2587.patch
   - type: patch
     path: netpbm-CVE-2017-2587.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-python3.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-python3.patch
   - type: patch
     path: netpbm-python3.patch
   # https://bugzilla.redhat.com/show_bug.cgi?id=26767
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-time.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-time.patch
   - type: patch
     path: netpbm-time.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-gcc4.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-gcc4.patch
   - type: patch
     path: netpbm-gcc4.patch
   # https://bugzilla.redhat.com/show_bug.cgi?id=224554
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-bmptopnm.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-bmptopnm.patch
   - type: patch
     path: netpbm-bmptopnm.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-CAN-2005-2471.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-CAN-2005-2471.patch
   - type: patch
     path: netpbm-CAN-2005-2471.patch
   # https://bugzilla.redhat.com/show_bug.cgi?id=181001
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-xwdfix.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-xwdfix.patch
   - type: patch
     path: netpbm-xwdfix.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-multilib.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-multilib.patch
   - type: patch
     path: netpbm-multilib.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-glibc.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-glibc.patch
   - type: patch
     path: netpbm-glibc.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-fiasco-overflow.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-fiasco-overflow.patch
   # https://bugzilla.redhat.com/show_bug.cgi?id=227283
   # https://bugzilla.redhat.com/show_bug.cgi?id=476989
   - type: patch
     path: netpbm-fiasco-overflow.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-cmuwtopbm.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-cmuwtopbm.patch
   - type: patch
     path: netpbm-cmuwtopbm.patch
-  # https://src.fedoraproject.org/rpms/netpbm/raw/406adea3ffb44e1004844b209d2bb2df48e0a7bb/f/netpbm-pamtojpeg2k.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-pamtojpeg2k.patch
   - type: patch
     path: netpbm-pamtojpeg2k.patch
+  # https://src.fedoraproject.org/rpms/netpbm/blob/cbbfb19878d7106f344ba63f2ca7f78d4e139a81/f/netpbm-libdir-so.patch
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1676370
+  - type: patch
+    path: netpbm-libdir-so.patch
   # Unrecognized option: --prefix=/app at ./buildtools/configure.pl line 2084.
   - type: patch
     path: netpbm-10.84.05-unrecognized-option.patch

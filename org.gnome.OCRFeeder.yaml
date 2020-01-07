@@ -1,6 +1,6 @@
 app-id: org.gnome.OCRFeeder
 runtime: org.gnome.Platform
-runtime-version: '3.30'
+runtime-version: '3.32'
 sdk: org.gnome.Sdk
 command: ocrfeeder
 finish-args:
@@ -20,6 +20,9 @@ finish-args:
   # for Append Project
   # for Export to ODT
   - --filesystem=home
+  # Network access
+  # for scanner access via net backend
+  - --share=network
   # Dconf access
   - --filesystem=xdg-run/dconf
   - --filesystem=~/.config/dconf:ro
