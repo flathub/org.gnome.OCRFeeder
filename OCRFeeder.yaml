@@ -5,7 +5,7 @@ config-opts:
 sources:
   - type: git
     url: https://gitlab.gnome.org/GNOME/ocrfeeder.git
-    commit: f3b6e1e89814f0ff8927a8f0f71b10390c9a260f
+    commit: 8615aff3966dbfe24ed45eed6d34dc9b4e6b4e90
   # Upstreamable patches
   # Update translations 2
   # Update Basque translation
@@ -66,7 +66,6 @@ post-install:
     done;
     install -p -D -m 0644 "${icon_in}" -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/";
 modules:
-  - shared-modules/python2.7/python-2.7.json
   - sane-backends.yaml
   - ghostscript.yaml
   - tesseract.yaml
@@ -81,10 +80,10 @@ modules:
   - gtkspell.yaml
   - iso-codes.yaml
   - dictionaries.yaml
-  - python2-pyenchant.yaml
-  - python2-PyGObject.yaml
-  - python2-lxml.yaml
-  - python2-reportlab.yaml
-  - python2-python-sane.yaml
-  - python2-odfpy.yaml
+  - python3-pyenchant.yaml
+  - python3-PyGObject.yaml
+  - python3-lxml.yaml
+  - python3-reportlab.yaml
+  - python3-python-sane.yaml
+  - python3-odfpy.yaml
   - fonts.yaml

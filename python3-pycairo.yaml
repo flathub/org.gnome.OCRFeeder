@@ -1,8 +1,8 @@
-name: python2-pycairo
+name: python3-pycairo
 buildsystem: simple
 sources:
   - type: file
     url: https://files.pythonhosted.org/packages/3c/1a/c0478ecab31baae50fda9956547788afbd0ca563adc52c9b03cab30f17eb/pycairo-1.18.2.tar.gz
     sha256: dcb853fd020729516e8828ad364084e752327d4cff8505d20b13504b32b16531
 build-commands:
-  - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" pycairo
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} pycairo

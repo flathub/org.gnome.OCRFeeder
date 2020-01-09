@@ -1,8 +1,8 @@
-name: python2-defusedxml
+name: python3-defusedxml
 buildsystem: simple
 sources:
   - type: file
     url: https://files.pythonhosted.org/packages/a4/5f/f8aa58ca0cf01cbcee728abc9d88bfeb74e95e6cb4334cfd5bed5673ea77/defusedxml-0.6.0.tar.gz
     sha256: f684034d135af4c6cbb949b8a4d2ed61634515257a67299e5f940fbaa34377f5
 build-commands:
-  - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" defusedxml
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} defusedxml
