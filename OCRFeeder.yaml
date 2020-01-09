@@ -5,7 +5,7 @@ config-opts:
 sources:
   - type: git
     url: https://gitlab.gnome.org/GNOME/ocrfeeder.git
-    commit: 1160f3de992467e977ac415e8a9a028f9c768430
+    commit: f3b6e1e89814f0ff8927a8f0f71b10390c9a260f
   # Upstreamable patches
   # Update translations 2
   # Update Basque translation
@@ -86,4 +86,5 @@ modules:
   - python2-lxml.yaml
   - python2-reportlab.yaml
   - python2-python-sane.yaml
+  - python2-odfpy.yaml
   - fonts.yaml
