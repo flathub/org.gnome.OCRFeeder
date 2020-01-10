@@ -1,5 +1,15 @@
+From f01a18e13af9d31b28ccd29b62e412075c8f97c6 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 22:18:38 +0100
+Subject: [PATCH] Fix scanner support #5
+
+Always display Scanner Chooser Dialog.
+---
+ src/ocrfeeder/studio/studioBuilder.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
-index 43cb432..2e7e110 100644
+index 1a6ca36..760fc78 100644
 --- a/src/ocrfeeder/studio/studioBuilder.py
 +++ b/src/ocrfeeder/studio/studioBuilder.py
 @@ -195,7 +195,7 @@ class Studio:
@@ -11,3 +21,6 @@ index 43cb432..2e7e110 100644
              scanner_chooser_dialog = widgetPresenter.ScannerChooserDialog(\
                                                      self.main_window,
                                                      devices)
+-- 
+2.24.1
+

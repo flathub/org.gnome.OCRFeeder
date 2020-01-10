@@ -1,8 +1,8 @@
-name: python2-lxml
+name: python3-lxml
 buildsystem: simple
 sources:
   - type: file
     url: https://files.pythonhosted.org/packages/e4/19/8dfeef50623892577dc05245093e090bb2bab4c8aed5cad5b03208959563/lxml-4.4.2.tar.gz
     sha256: eff69ddbf3ad86375c344339371168640951c302450c5d3e9936e98d6459db06
 build-commands:
-  - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" lxml
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} lxml

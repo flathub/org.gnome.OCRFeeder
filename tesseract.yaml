@@ -23,7 +23,6 @@ sources:
   #  url: https://github.com/tesseract-ocr/tessdata_best/archive/4.0.0.tar.gz
   #  sha256: 5d826c8a926d06b4e19eae391949f24f3011973cc7f679c57a059054fa2d8c60
   #  dest: traineddata
-  # The above url is temporarily unavailable. Switching to Git protocol instead.
   - type: git
     url: https://github.com/tesseract-ocr/tessdata_best.git
     #tag: 4.0.0

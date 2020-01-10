@@ -1,10 +1,10 @@
-name: python2-reportlab
+name: python3-reportlab
 buildsystem: simple
 sources:
   - type: file
     url: https://files.pythonhosted.org/packages/9b/e0/97b334f0e6a805c921ac369a153cea6ea822787a1d8247c7e65b1386c520/reportlab-3.5.32.tar.gz
     sha256: 83ef44936ef4e9c432d62bc2b72ec8d772b87af319d123e827a72e9b6884c851
 build-commands:
-  - pip2 install --no-index --find-links="file://${PWD}" --install-option="--prefix=${FLATPAK_DEST}" reportlab
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} reportlab
 modules:
-  - python2-Pillow.yaml
+  - python3-Pillow.yaml

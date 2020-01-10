@@ -1,0 +1,10 @@
+name: python3-odfpy
+buildsystem: simple
+sources:
+  - type: file
+    url: https://files.pythonhosted.org/packages/85/7d/8f6d1f2a4683be362b101c00232b4c3839e4e4a90e0945d8d43ec6aa671d/odfpy-1.4.0.tar.gz
+    sha256: 596021f0519623ca8717331951c95e3b8d7b21e86edc7efe8cb650a0d0f59a2b
+build-commands:
+  - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} odfpy
+modules:
+  - python3-defusedxml.yaml
