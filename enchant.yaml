@@ -13,3 +13,4 @@ sources:
       - autoreconf -vfi;
 cleanup:
   - /bin
+  - '*.la'

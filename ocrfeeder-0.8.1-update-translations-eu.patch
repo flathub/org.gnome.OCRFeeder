@@ -1,8 +1,9 @@
-From 6dddba9a1696881119a7698aabc1efdc97ec82bb Mon Sep 17 00:00:00 2001
+From 01b179e240340b19600c796709c2d6d7f920d88d Mon Sep 17 00:00:00 2001
 From: scx <scx.mail@gmail.com>
 Date: Sat, 4 Jan 2020 16:22:22 +0100
 Subject: [PATCH] Update Basque translation
 
+Provide basic translation of the AppData file.
 ---
  po/eu.po | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)

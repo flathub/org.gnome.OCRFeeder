@@ -1,9 +1,8 @@
-From 5cddadc584c9f5f66d4226ecb7a598aa9b4ead6d Mon Sep 17 00:00:00 2001
+From d14435cec3519fe3a9490ba210911f28bc20f90d Mon Sep 17 00:00:00 2001
 From: scx <scx.mail@gmail.com>
 Date: Mon, 6 Jan 2020 18:25:38 +0100
-Subject: [PATCH] Update desktop file
-
-Update the Keywords tag and make it translatable.
+Subject: [PATCH] Update desktop file: Update Keywords tag and make it
+ translatable
 
 See: https://gitlab.gnome.org/GNOME/ocrfeeder/commit/c75683d02d2f5e12fd025893e61bc8ec9154428d#note_677586
 ---

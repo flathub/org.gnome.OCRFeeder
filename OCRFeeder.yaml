@@ -5,40 +5,46 @@ config-opts:
 sources:
   - type: git
     url: https://gitlab.gnome.org/GNOME/ocrfeeder.git
-    commit: 8615aff3966dbfe24ed45eed6d34dc9b4e6b4e90
+    commit: 7f32b3be5733c321643ed11f301661504c34685d
   # Upstreamable patches
   # Update translations 2
   # Update Basque translation
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/6dddba9a1696881119a7698aabc1efdc97ec82bb
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/01b179e240340b19600c796709c2d6d7f920d88d
   - type: patch
-    path: ocrfeeder-0.8.1-update-translations-2.patch
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/16
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/d6375c9f1a796804e75ae1876e3b36187d4cd9cd
+    path: ocrfeeder-0.8.1-update-translations-eu.patch
+  # Install app icon in XDG directory
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/18
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/d136e7db6aa09803ff08bc2a80ea9fe30dce7f2c
   - type: patch
-    path: ocrfeeder-0.8.1-fix-spellchecker-window.patch
+    path: ocrfeeder-0.8.1-xdg-icon.patch
   # Update desktop file
   # Update the Keywords tag and make it translatable
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/5cddadc584c9f5f66d4226ecb7a598aa9b4ead6d
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/d14435cec3519fe3a9490ba210911f28bc20f90d
   - type: patch
     path: ocrfeeder-0.8.1-desktop-keywords.patch
+  # Fix spell checker window
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/16
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/9808ce235fd7e1f8be951ff4a735ca397ed65566
+  - type: patch
+    path: ocrfeeder-0.8.1-fix-spellchecker-window.patch
   # Fix scanner support #1
   # Fix Gtk.Box.pack_start()
   # TypeError: Gtk.Box.pack_start() takes exactly 5 non-keyword arguments (2 given)
-  # https://stackoverflow.com/questions/17041142/default-arguments-removed-in-gtk3/17354844#17354844
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/8cffb0f25215af072c4fe7e308de4830ad7ccc60
+  # https://github.com/sugarlabs/sugar-docs/blob/master/src/gtk3-porting-guide.md#hbox-vbox-pack_start-and-pack_end
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/c8bdf0693cde45c772b62a5985c6302612894e1e
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-1.patch
   # Fix scanner support #2
   # Fix Scanner Chooser Dialog: unable to select any scanner
   # No scanner devices were found
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/e14a01b6089c0cdfa78da47f71662b990f268b6b
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/eafa8f61443bb76318efdad5b9963de227924082
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-2.patch
   # Fix scanner support #3
   # Fix __scanFinishedCb()
   # Need to specify the parent window
   # TypeError: could not convert value for property `transient_for' from str to GtkWindow
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/a35ec19ff76778dadbfa7df3a1f39ae94f3de7a1
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/8a3e6696724474ebc175a1b02ba1f96f436a4abb
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-3.patch
   # Fix scanner support #4
@@ -46,15 +52,19 @@ sources:
   # Some scanners don't support the Resolution parameter at all.
   # Supported modes may be vary across different scanners. Not all of them support the "Color" mode. For example, some of them support "Color24" or "Color48" instead.
   # Error scanning page
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/3859faacd8963691f0b60c514fad4e474bb76c72
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/873af2169e1fde039cbf3e53db9b386189afb92b
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-4.patch
-  # Flatpak-specific patches
   # Fix scanner support #5
-  # Always display Scanner Chooser Dialog
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/f01a18e13af9d31b28ccd29b62e412075c8f97c6
+  # Try to maximize scan area
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/dd061397eefdb6fccf41e4814952f7a8227349c1
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-5.patch
+  # Flatpak-specific patches
+  # Fix scanner support #0
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/5236cb220e3b98cdec300db5872a877bb09a205f
+  - type: patch
+    path: ocrfeeder-0.8.1-fix-scanning-0.patch
 post-install:
   - |
     icon_in="resources/icons/${FLATPAK_ID}.svg";
@@ -64,7 +74,6 @@ post-install:
       rsvg-convert "${icon_in}" -w "${s}" -h "${s}" -a -f png -o "${icon_out}";
       install -p -D -m 0644 "${icon_out}" -t "${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/";
     done;
-    install -p -D -m 0644 "${icon_in}" -t "${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/";
 modules:
   - sane-backends.yaml
   - ghostscript.yaml

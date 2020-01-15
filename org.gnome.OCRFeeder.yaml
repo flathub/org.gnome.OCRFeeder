@@ -45,4 +45,5 @@ cleanup:
   - /share/gtk-doc
   - /share/man
   - /share/pkgconfig
-  - '*.la'
+  - /lib/*.la
+  - '*.a'
