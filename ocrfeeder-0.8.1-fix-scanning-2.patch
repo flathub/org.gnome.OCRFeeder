@@ -1,20 +1,23 @@
-From e14a01b6089c0cdfa78da47f71662b990f268b6b Mon Sep 17 00:00:00 2001
+From eafa8f61443bb76318efdad5b9963de227924082 Mon Sep 17 00:00:00 2001
 From: scx <scx.mail@gmail.com>
 Date: Mon, 6 Jan 2020 19:54:35 +0100
-Subject: [PATCH] Fix scanner support #2
+Subject: [PATCH] Fix getting selected scanner from scan dialog
 
-Fix Scanner Chooser Dialog: unable to select any scanner.
+The code that gets the selected scanner was being called after the
+dialog destroyed, and that resulted in always getting "None" as the
+selected scanner.
 
-Call getSelectedDevice() before destroying ScannerChooserDialog.
+This patch fixes that by simply calling the mentioned function before
+destroying the dialog.
 ---
  src/ocrfeeder/studio/studioBuilder.py | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
-index 43cb432..8b328a4 100644
+index cbf4490..f713c7c 100644
 --- a/src/ocrfeeder/studio/studioBuilder.py
 +++ b/src/ocrfeeder/studio/studioBuilder.py
-@@ -202,10 +202,10 @@ class Studio:
+@@ -200,10 +200,10 @@ class Studio:
              Gdk.threads_enter()
              response = scanner_chooser_dialog.run()
              Gdk.threads_leave()

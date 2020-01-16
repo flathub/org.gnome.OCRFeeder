@@ -1,0 +1,43 @@
+From 5236cb220e3b98cdec300db5872a877bb09a205f Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Mon, 6 Jan 2020 22:18:38 +0100
+Subject: [PATCH] Always display Scanner Chooser Dialog
+
+Because flatpak doesn't have access to sane from the host, we need to
+include each sane backend in the flatpak package, which is insane to
+maintenance.
+It's practically impossible to support all external backends, so the
+scanner list may differ from what we have on the host.
+Even if we use the net backend, it won't work for all scanners.
+This's why we should always display the Scanner Chooser Dialog, to make
+sure that user will always pick up the right device, or cancel if it is
+not accessible.
+
+There are some plans to extend xdg desktop portals, or - to be more
+specific - add the scanner portal, so it would provide a sane way to
+access scanners. Unfortunately, these are just plans. No one is
+currently working on it.
+By the way, that is one of the main reasons why we don't have the
+flatpak package for simple-scan yet.
+
+See https://github.com/flatpak/xdg-desktop-portal/issues/218
+---
+ src/ocrfeeder/studio/studioBuilder.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ocrfeeder/studio/studioBuilder.py b/src/ocrfeeder/studio/studioBuilder.py
+index cbf4490..1d32759 100644
+--- a/src/ocrfeeder/studio/studioBuilder.py
++++ b/src/ocrfeeder/studio/studioBuilder.py
+@@ -193,7 +193,7 @@ class Studio:
+     def __obtainScannersFinishedCb(self, dialog, devices, error):
+         dialog.destroy()
+         device = None
+-        if len(devices) > 1:
++        if len(devices) >= 1:
+             scanner_chooser_dialog = widgetPresenter.ScannerChooserDialog(\
+                                                     self.main_window,
+                                                     devices)
+-- 
+2.24.1
+
