@@ -84,13 +84,14 @@ modules:
   - goocanvas2.yaml
   - djvulibre.yaml
   - unpaper.yaml
+  - gnome-common.yaml
   - enchant.yaml
   - enchant2.yaml
   - gtkspell.yaml
   - iso-codes.yaml
   - dictionaries.yaml
   - python3-pyenchant.yaml
-  - python3-PyGObject.yaml
+  #- python3-PyGObject.yaml
   - python3-lxml.yaml
   - python3-reportlab.yaml
   - python3-python-sane.yaml

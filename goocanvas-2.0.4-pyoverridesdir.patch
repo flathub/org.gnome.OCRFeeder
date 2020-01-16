@@ -1,0 +1,64 @@
+diff -Naur goocanvas-2.0.4.orig/configure goocanvas-2.0.4/configure
+--- goocanvas-2.0.4.orig/configure	2017-10-10 09:53:27.000000000 +0200
++++ goocanvas-2.0.4/configure	2020-01-11 23:47:57.907191940 +0100
+@@ -842,6 +842,7 @@
+ enable_introspection
+ enable_rebuilds
+ enable_python
++with_pygi_overrides_dir
+ with_html_dir
+ enable_gtk_doc
+ enable_gtk_doc_html
+@@ -1522,6 +1523,8 @@
+   --without-libiconv-prefix     don't search for libiconv in includedir and libdir
+   --with-libintl-prefix[=DIR]  search for libintl in DIR/include and DIR/lib
+   --without-libintl-prefix     don't search for libintl in includedir and libdir
++  --with-pygi-overrides-dir
++                          Path to pygobject overrides directory
+   --with-html-dir=PATH    path to installed docs
+ 
+ Some influential environment variables:
+@@ -15157,7 +15160,21 @@
+ 
+ fi
+ 
+-	pyoverridesdir=`$PYTHON -c "import gi;print (gi._overridesdir)"`
++
++# Check whether --with-pygi_overrides_dir was given.
++if test "${with_pygi_overrides_dir+set}" = set; then :
++  withval=$with_pygi_overrides_dir;
++fi
++
++
++	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pygobject overrides directory" >&5
++$as_echo_n "checking for pygobject overrides directory... " >&6; }
++	if test "x$with_pygi_overrides_dir" = "x" ; then
++		pyoverridesdir="`$PYTHON -c 'import gi; print(gi._overridesdir)' 2>/dev/null`"
++	else
++		pyoverridesdir="$with_pygi_overrides_dir"
++	fi
++
+ 
+ fi
+ 
+diff -Naur goocanvas-2.0.4.orig/configure.ac goocanvas-2.0.4/configure.ac
+--- goocanvas-2.0.4.orig/configure.ac	2017-10-10 09:48:21.000000000 +0200
++++ goocanvas-2.0.4/configure.ac	2020-01-11 23:46:46.885566463 +0100
+@@ -101,7 +101,16 @@
+ if test "x$enable_python" = "xyes"; then
+ 	PKG_CHECK_MODULES(PYTHON, [pygobject-3.0 >= $PYGOBJECT_REQUIRED])
+ 
+-	pyoverridesdir=`$PYTHON -c "import gi;print (gi._overridesdir)"`
++	AC_ARG_WITH([pygi_overrides_dir],
++				AC_HELP_STRING([--with-pygi-overrides-dir], [Path to pygobject overrides directory]))
++
++	AC_MSG_CHECKING(for pygobject overrides directory)
++	if test "x$with_pygi_overrides_dir" = "x" ; then
++		pyoverridesdir="`$PYTHON -c 'import gi; print(gi._overridesdir)' 2>/dev/null`"
++	else
++		pyoverridesdir="$with_pygi_overrides_dir"
++	fi
++
+ 	AC_SUBST(pyoverridesdir)
+ fi
+ 
