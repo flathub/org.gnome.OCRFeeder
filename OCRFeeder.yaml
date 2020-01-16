@@ -91,7 +91,6 @@ modules:
   - iso-codes.yaml
   - dictionaries.yaml
   - python3-pyenchant.yaml
-  #- python3-PyGObject.yaml
   - python3-lxml.yaml
   - python3-reportlab.yaml
   - python3-python-sane.yaml
