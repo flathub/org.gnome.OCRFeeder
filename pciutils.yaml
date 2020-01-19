@@ -19,4 +19,3 @@ post-install:
     for f in pci.h header.h config.h types.h; do
        install -p -D -m 0644 "lib/${f}" -t "${FLATPAK_DEST}/include/pci/";
     done;
-  - install -p -D -m 0644 "COPYING" -t "${FLATPAK_DEST}/share/licenses/pciutils/";
