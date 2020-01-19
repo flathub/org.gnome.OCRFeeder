@@ -57,7 +57,7 @@ sources:
     path: ocrfeeder-0.8.1-fix-scanning-4.patch
   # Fix scanner support #5
   # Try to maximize scan area
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/dd061397eefdb6fccf41e4814952f7a8227349c1
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/9a2480f73ade36d58f623b539c656f1d728e9d3d
   - type: patch
     path: ocrfeeder-0.8.1-fix-scanning-5.patch
   # Flatpak-specific patches
@@ -76,6 +76,7 @@ post-install:
     done;
 modules:
   - sane-backends.yaml
+  - hpaio.yaml
   - ghostscript.yaml
   - tesseract.yaml
   - ocrad.yaml
