@@ -16,16 +16,37 @@ build-options:
       cppflags: -DPNG_ARM_NEON_OPT=0
 sources:
   - type: archive
-    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs950/ghostscript-9.50.tar.xz
-    sha256: db9bb0817b6f22974e6d5ad751975f346420c2c86a0afcfe6b4e09c47803e7d4
+    url: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs927/ghostscript-9.27.tar.xz
+    sha256: fc0f1fbacd3610c67a9f080487a0e021f14390c38a4b4df9723e2bdf2b90b619
+  # Fix for CVE-2019-10216
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-10216
+  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=5b85ddd19a8420a1bd2d5529325be35d78e94234
+  # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-cve-2019-10216.patch
+  - type: patch
+    path: ghostscript-cve-2019-10216.patch
+  # Fix for CVE-2019-14811 & CVE-2019-14812 & CVE-2019-14813
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-14811
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-14812
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-14813
+  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=885444fcbe10dc42787ecb76686c8ee4dd33bf33
+  # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-cve-2019-14811-14812-14813.patch
+  - type: patch
+    path: ghostscript-cve-2019-14811-14812-14813.patch
+  # Fix for CVE-2019-14817
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-14817
+  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=cd1b1cacadac2479e291efe611979bdc1b3bdb19
+  # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-cve-2019-14817.patch
+  - type: patch
+    path: ghostscript-cve-2019-14817.patch
   # Fix for CVE-2019-14869
-  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=485904772c5f
+  # https://nvd.nist.gov/vuln/detail/CVE-2019-14869
+  # https://git.ghostscript.com/?p=ghostpdl.git;a=commitdiff;h=485904772c5f0aa1140032746e5a0abfc40f4cef
   # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-cve-2019-14869.patch
   - type: patch
     path: ghostscript-cve-2019-14869.patch
   # Make sure dvipdf is being run securely
-  # https://src.fedoraproject.org/rpms/ghostscript/raw/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-9.23-100-run-dvipdf-securely.patch
+  # https://src.fedoraproject.org/rpms/ghostscript/blob/577ec8f749c409b4e40d311e369c406dd8fa7b6b/f/ghostscript-9.23-100-run-dvipdf-securely.patch
   - type: patch
-    path: ghostscript-9.50-run-dvipdf-securely.patch
+    path: ghostscript-9.23-100-run-dvipdf-securely.patch
 cleanup:
   - /share/doc
