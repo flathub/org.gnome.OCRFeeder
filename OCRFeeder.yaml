@@ -3,9 +3,9 @@ config-opts:
   - --enable-maintainer-mode
   - --enable-sandbox
 sources:
-  - type: git
-    url: https://gitlab.gnome.org/GNOME/ocrfeeder.git
-    commit: 2df0dfd0e373390011c3e1303c2cea93dfc650f6
+  - type: archive
+    url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.2/ocrfeeder-0.8.2.tar.bz2
+    sha256: 8403c2c5f464998173888283aa2e6d00b24e0dc40105f183c804b9e456031ac0
   # Upstreamed patches
   # Updated Spanish translation
   # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/b9450893729182a799da53c482ec6922ae5e369f
