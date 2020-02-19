@@ -9,7 +9,6 @@ config-opts:
   - --disable-ffprobe
 
   - --enable-gpl
-  - --enable-nonfree
   - --enable-version3
   - --enable-optimizations
   - --enable-postproc
