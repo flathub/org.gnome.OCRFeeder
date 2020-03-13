@@ -186,7 +186,6 @@ Short answer: all default **SANE** backends + `v4l` + `hpaio`.
  * [hp8200](http://www.sane-project.org/lists/sane-backends-external.html#S-HP8200)
  * [hpoj](http://www.sane-project.org/lists/sane-backends-external.html#S-HPOJ)
  * [kodak-twain](http://www.sane-project.org/lists/sane-backends-external.html#S-KODAK-TWAIN)
- * [kvs40xx](http://www.sane-project.org/sane-backends.html#S-KVS40XX)
  * [lhii](http://www.sane-project.org/lists/sane-backends-external.html#S-LHII)
  * [mustek_a3p1](http://www.sane-project.org/lists/sane-backends-external.html#S-MUSTEK-A3P1)
  * [panamfs](http://www.sane-project.org/lists/sane-backends-external.html#S-PANAMFS)
