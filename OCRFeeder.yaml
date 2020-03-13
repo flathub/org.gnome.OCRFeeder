@@ -10,7 +10,15 @@ sources:
   # Updated Spanish translation
   # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/b9450893729182a799da53c482ec6922ae5e369f
   - type: patch
-    path: ocrfeeder-0.8.1-update-translations-es-20200128.patch
+    path: ocrfeeder-0.8.2-update-translations-es-20200128.patch
+  # Updated Brazilian Portuguese translation
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/e00176ed055b07995fc40f99aa3427b5ac58389a
+  - type: patch
+    path: ocrfeeder-0.8.2-update-translations-pt-br-20200213.patch
+  # Updated Basque translation
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/25ef5bc050485522be635ce761052321a5014d75
+  - type: patch
+    path: ocrfeeder-0.8.2-update-translations-eu-20200304.patch
   # Upstreamable patches
   # Fix PDF import #1: execute Ghostscript in proper way
   # Some changes are required to execute commands in Python3 properly
@@ -33,6 +41,11 @@ sources:
   # https://gitlab.gnome.org/scx/ocrfeeder/commit/2bbe236f1d44eeed0bcc06e04117e3e32e5161a1
   - type: patch
     path: ocrfeeder-0.8.1-fix-pdf-import-subprocess.patch
+  # Fix PDF import #4: Handle exceptions when importing PDF
+  # Handle the situation when an error occurs in convertPdfToImages()
+  # https://gitlab.gnome.org/scx/ocrfeeder/commit/cf14298d62791e8269b23a748cb1f75b8f7c82d7
+  - type: patch
+    path: ocrfeeder-0.8.1-fix-pdf-import-errors.patch
   # Flatpak-specific patches
   # Fix scanner support #0
   # Always display Scanner Chooser Dialog

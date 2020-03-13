@@ -2,10 +2,10 @@ name: google-droid-sans-fallback-full
 buildsystem: simple
 sources:
   - type: file
-    url: https://raw.githubusercontent.com/aosp-mirror/platform_frameworks_base/5a049f5cf22d2eb5c7c4974fbf282427cb418ece/data/fonts/DroidSansFallbackFull.ttf
+    url: https://raw.githubusercontent.com/aosp-mirror/platform_frameworks_base/49d765ee67eda4372e3fd831836190228fa82e85/data/fonts/DroidSansFallbackFull.ttf
     sha256: 2392015530438bafc48edfc4aee6d9de2387f627a6134d8ab3dfcc99d21c8240
   - type: file
-    url: https://raw.githubusercontent.com/aosp-mirror/platform_frameworks_base/5a049f5cf22d2eb5c7c4974fbf282427cb418ece/data/fonts/NOTICE
+    url: https://raw.githubusercontent.com/aosp-mirror/platform_frameworks_base/49d765ee67eda4372e3fd831836190228fa82e85/data/fonts/NOTICE
     sha256: 38751245389e1e23f73e6f5384b5cbe7fa972cc4410c5adc9c04b082a0b9561a
 build-commands:
   - |

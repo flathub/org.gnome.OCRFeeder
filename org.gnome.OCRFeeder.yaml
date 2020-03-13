@@ -36,6 +36,9 @@ finish-args:
   - --device=dri
   # Scanners access
   - --device=all
+  # Local network host discovery
+  # Needed for escl (sane backend)
+  - --system-talk-name=org.freedesktop.Avahi
   # hplip may require full D-Bus access
   #- --socket=session-bus
   #- --socket=system-bus

@@ -1,0 +1,45 @@
+name: avahi
+config-opts:
+  - --enable-shared
+  - --disable-static
+  - --with-distro=none
+  - --with-systemdsystemunitdir=/app/lib/systemd
+  - --enable-dbus
+  - --enable-compat-libdns_sd
+  - --disable-libdaemon
+  - --disable-python
+  - --disable-pygobject
+  - --disable-python-dbus
+  - --disable-gtk
+  - --disable-gtk3
+  - --disable-qt3
+  - --disable-qt4
+  - --disable-qt5
+  - --disable-mono
+  - --disable-monodoc
+  - --disable-doxygen-doc
+  - --disable-doxygen-dot
+  - --disable-doxygen-man
+  - --disable-doxygen-rtf
+  - --disable-doxygen-xml
+  - --disable-doxygen-chm
+  - --disable-doxygen-chi
+  - --disable-doxygen-html
+  - --disable-doxygen-ps
+  - --disable-doxygen-pdf
+  - --disable-core-docs
+  - --disable-manpages
+  - --disable-xmltoman
+sources:
+  - type: archive
+    url: https://avahi.org/download/avahi-0.8.tar.gz
+    sha256: 060309d7a333d38d951bc27598c677af1796934dbd98e1024e7ad8de798fedda
+  - type: shell
+    commands:
+      - cp -p /usr/share/automake-*/config.{sub,guess} .;
+      - autoreconf -vfi;
+modules:
+  - shared-modules/dbus-glib/dbus-glib-0.110.json
+  - libevent.yaml
+cleanup:
+  - /bin

@@ -6,7 +6,7 @@ sources:
   - type: archive
     url: https://downloads.sourceforge.net/libieee1284/libieee1284-0.2.11.tar.bz2
     sha256: 7730de107782e5d2b071bdcb5b06a44da74856f00ef4a9be85d1ba4806a38f1a
-  # https://src.fedoraproject.org/rpms/libieee1284/raw/54fbd04b7fd0e3a99cfd0c2d83292d6dad2f7741/f/libieee1284-strict-aliasing.patch
+  # https://src.fedoraproject.org/rpms/libieee1284/blob/40a545b16621a65d9446346a0aba21ccc5d63e75/f/libieee1284-strict-aliasing.patch
   - type: patch
     path: libieee1284-strict-aliasing.patch
   - type: shell

@@ -1,0 +1,25 @@
+From 25ef5bc050485522be635ce761052321a5014d75 Mon Sep 17 00:00:00 2001
+From: Andre Klapper <a9016009@gmx.de>
+Date: Thu, 5 Mar 2020 00:44:38 +0100
+Subject: [PATCH] Fix broken markup in Basque UI translation
+
+---
+ po/eu.po | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/po/eu.po b/po/eu.po
+index cf13435..e359096 100644
+--- a/po/eu.po
++++ b/po/eu.po
+@@ -287,7 +287,7 @@ msgid ""
+ "<b>A file named \"%(name)s\" already exists. Do you want to replace it?</b>\n"
+ "\n"
+ "The file exists in \"%(dir)s\". Replacing it will overwrite its contents."
+-msgstr "\"%(name)s\" izeneko fitxategia badago lehendik. Ordeztu nahi duzu?</b>\n"
++msgstr "<b>\"%(name)s\" izeneko fitxategia badago lehendik. Ordeztu nahi duzu?</b>\n"
+ "\n"
+ "Fitxategia badago lehendik \"%(dir)s\" direktorioan. Hura ordezten bada, edukiak gainidatzi egingo dira."
+ 
+-- 
+2.24.1
+
