@@ -30,8 +30,8 @@ build-options:
   cflags: -I/app/include/libusb-1.0
 sources:
   - type: archive
-    url: https://downloads.sourceforge.net/sourceforge/hplip/hplip-3.19.12.tar.gz
-    sha256: b7f398502fb659e0de8e54976237e3c6a64fec0b3c36054a515876f7b006b255
+    url: https://downloads.sourceforge.net/sourceforge/hplip/hplip-3.20.3.tar.gz
+    sha256: 41097ec52af5cce51ec7b0200d9f9ec82649b58ae7105259e82130e9cf63066a
   # patches for HPAIO from Fedora
   - type: patch
     path: hplip-no-asm.patch
@@ -96,6 +96,15 @@ sources:
   # https://bugs.launchpad.net/hplip/+bug/1843592
   - type: patch
     path: hplip-missing-drivers.patch
+  # sixext has problems with python3 strings
+  # https://bugzilla.redhat.com/show_bug.cgi?id=1573430
+  # https://bugs.launchpad.net/bugs/1480152
+  - type: patch
+    path: hplip-unicodeerror.patch
+  # the version attribute in python-pillow got changed again
+  # https://bugs.launchpad.net/hplip/+bug/1863620
+  - type: patch
+    path: hplip-pil.patch
   # work-around Makefile.am imperfections
   - type: patch
     path: hplip-3.19.11-automake-foreign.patch

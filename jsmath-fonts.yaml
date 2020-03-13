@@ -3,7 +3,7 @@ buildsystem: simple
 sources:
   - type: git
     url: https://github.com/google/fonts.git
-    commit: 37c0f8e104143dbc57fbdffb835fbe6e84d8a465
+    commit: 860390daf2d86d24984d56671c22fc8f04682d43
   # https://src.fedoraproject.org/rpms/jsmath-fonts/blob/3b09537bd15fff95734ea2813e110f5e51999f79/f/jsmath-fonts.spec#_7-8
   - type: shell
     commands:
