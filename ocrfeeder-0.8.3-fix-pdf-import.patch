@@ -1,0 +1,120 @@
+From 38eb37744d0482884bd46b60be3f1d8ce2874a85 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Sun, 8 Mar 2020 23:08:57 +0100
+Subject: [PATCH 1/4] Replace subprocess.run() with
+ subprocess.Popen().communicate()
+
+Unfortunately, subprocess.run() doesn't work as expected on older
+versions of Python.
+
+We have experienced such a situation in RHEL (PDF import).
+
+Fixes GNOME/ocrfeeder#19
+---
+ src/ocrfeeder/util/lib.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/ocrfeeder/util/lib.py b/src/ocrfeeder/util/lib.py
+index f2013e0..1684976 100644
+--- a/src/ocrfeeder/util/lib.py
++++ b/src/ocrfeeder/util/lib.py
+@@ -105,7 +105,8 @@ def runGhostscript(dir_name, base_name, pdf_path):
+                'pdf_file': pdf_path,
+                'resolution': resolution,
+                'size': size}
+-    process = subprocess.run(command, shell=True)
++    process = subprocess.Popen(command, shell=True)
++    process.communicate()
+ 
+ def getImagesFromFolder(folder):
+     if not os.path.isdir(folder):
+-- 
+2.24.1
+
+
+From 83d862641ec527500e8125c4768212f802bea74d Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Sun, 8 Mar 2020 23:09:49 +0100
+Subject: [PATCH 2/4] Handle exceptions when importing PDF
+
+Handle the situation when an error occurs in convertPdfToImages().
+
+convertPdfToImages() may return None when an error occurs,
+but getImagesFromFolder() cannot handle it.
+This patch fixes it.
+---
+ src/ocrfeeder/util/lib.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/ocrfeeder/util/lib.py b/src/ocrfeeder/util/lib.py
+index 1684976..b723f88 100644
+--- a/src/ocrfeeder/util/lib.py
++++ b/src/ocrfeeder/util/lib.py
+@@ -109,6 +109,8 @@ def runGhostscript(dir_name, base_name, pdf_path):
+     process.communicate()
+ 
+ def getImagesFromFolder(folder):
++    if folder is None:
++        return []
+     if not os.path.isdir(folder):
+         return []
+     content = os.listdir(folder)
+-- 
+2.24.1
+
+
+From 8b114dc11d40122d9c36f8d7c1246ecf4f1039e9 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Sun, 8 Mar 2020 23:26:34 +0100
+Subject: [PATCH 3/4] Refactor runGhostscript()
+
+Move ghostscript's options into function parameters
+---
+ src/ocrfeeder/util/lib.py | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/src/ocrfeeder/util/lib.py b/src/ocrfeeder/util/lib.py
+index b723f88..79a0359 100644
+--- a/src/ocrfeeder/util/lib.py
++++ b/src/ocrfeeder/util/lib.py
+@@ -92,10 +92,7 @@ def convertPdfToImages(pdf_file, temp_dir = '/tmp'):
+ 
+     return dir_name
+ 
+-def runGhostscript(dir_name, base_name, pdf_path):
+-    format='jpeg'
+-    resolution = 300
+-    size = 'letter'
++def runGhostscript(dir_name, base_name, pdf_path, format = 'jpeg', resolution = 300, size = 'letter'):
+     command = 'gs -SDEVICE=%(format)s -r%(resolution)sx%(resolution)s -sPAPERSIZE=%(size)s ' \
+               '-sOutputFile=\'%(temp_name)s/%(file_name)s_%%04d.jpg\' ' \
+               '-dNOPAUSE -dBATCH -- \'%(pdf_file)s\'' % \
+-- 
+2.24.1
+
+
+From 0e6d526a0a691a0ecb992e6162e1010e8a50a6c3 Mon Sep 17 00:00:00 2001
+From: scx <scx.mail@gmail.com>
+Date: Sun, 8 Mar 2020 23:41:52 +0100
+Subject: [PATCH 4/4] Beautify PDF import code
+
+Remove semi-duplicated line.
+---
+ src/ocrfeeder/util/lib.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/ocrfeeder/util/lib.py b/src/ocrfeeder/util/lib.py
+index 79a0359..2a16ef4 100644
+--- a/src/ocrfeeder/util/lib.py
++++ b/src/ocrfeeder/util/lib.py
+@@ -73,7 +73,6 @@ def convertPdfToImages(pdf_file, temp_dir = '/tmp'):
+ 
+     if pdf_file != pdf_file_safe:
+         try:
+-            pdf_path_safe = os.path.join(dir_name, file_name_safe)
+             # The prefix added here is for extra safety so there are less chances
+             # for this path to match the original one in future changes.
+             pdf_path_safe = os.path.join(dir_name, 'OCRFEEDER_' + file_name_safe)
+-- 
+2.24.1
+
