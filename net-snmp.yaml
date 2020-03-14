@@ -53,8 +53,3 @@ sources:
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
-modules:
-  # pciutils is broken in Freedesktop 19.08.5
-  # /usr/include/pci/pci.h:13:10: fatal error: config.h: No such file or directory
-  # https://gitlab.com/freedesktop-sdk/freedesktop-sdk/issues/921
-  - pciutils.yaml
