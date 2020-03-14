@@ -4,48 +4,32 @@ config-opts:
   - --enable-sandbox
 sources:
   - type: archive
-    url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.2/ocrfeeder-0.8.2.tar.bz2
-    sha256: 8403c2c5f464998173888283aa2e6d00b24e0dc40105f183c804b9e456031ac0
+    url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.3/ocrfeeder-0.8.3.tar.bz2
+    sha256: 691666be2d0526faf604fefba868878e12afe24925c0beed82b9ddc05cb76298
   # Upstreamed patches
   # Updated Spanish translation
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/b9450893729182a799da53c482ec6922ae5e369f
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/3ba08ca71cb61a054eb00796bc738bf0269f72f9
   - type: patch
-    path: ocrfeeder-0.8.2-update-translations-es-20200128.patch
+    path: ocrfeeder-0.8.3-update-translations-es-20200309.patch
   # Updated Brazilian Portuguese translation
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/e00176ed055b07995fc40f99aa3427b5ac58389a
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/fbfe9473ad874cbc168f2f2a9ab6dff7f77735e0
   - type: patch
-    path: ocrfeeder-0.8.2-update-translations-pt-br-20200213.patch
-  # Updated Basque translation
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/25ef5bc050485522be635ce761052321a5014d75
+    path: ocrfeeder-0.8.3-update-translations-pt-br-20200310.patch
+  # Updated Catalan translation
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/ac8e5aec43acc435fead688134d0da9f644d2b00
   - type: patch
-    path: ocrfeeder-0.8.2-update-translations-eu-20200304.patch
+    path: ocrfeeder-0.8.3-update-translations-ca-20200310.patch
   # Upstreamable patches
-  # Fix PDF import #1: execute Ghostscript in proper way
-  # Some changes are required to execute commands in Python3 properly
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/19
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/7fc56e7d873d0dcbcdf59fde6ae17e632898207c
-  - type: patch
-    path: ocrfeeder-0.8.1-fix-pdf-import-popen.patch
-  # Fix PDF import #2: handle special chars in filename
-  # Some special characters (e.g. quotes) in the filename cause gs to fail
-  # What's worse, gs interprets the escape character as a real character
-  # This means that it cannot handle all Unix files on its own
-  # We need to create a temp symlink as a workaround for gs limitations
-  # https://gitlab.gnome.org/GNOME/ocrfeeder/issues/20
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/55659f69e65458bad86240668d3b4bb47988bf96
-  - type: patch
-    path: ocrfeeder-0.8.1-fix-pdf-import-symlink.patch
-  # Fix PDF import #3: replace deprecated os.popen() by subprocess.Popen()
-  # The os.popen() method is obsolete since Python 2.6
-  # We should use the subprocess module instead
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/2bbe236f1d44eeed0bcc06e04117e3e32e5161a1
-  - type: patch
-    path: ocrfeeder-0.8.1-fix-pdf-import-subprocess.patch
-  # Fix PDF import #4: Handle exceptions when importing PDF
+  # Fix PDF import
   # Handle the situation when an error occurs in convertPdfToImages()
-  # https://gitlab.gnome.org/scx/ocrfeeder/commit/cf14298d62791e8269b23a748cb1f75b8f7c82d7
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/8
   - type: patch
-    path: ocrfeeder-0.8.1-fix-pdf-import-errors.patch
+    path: ocrfeeder-0.8.3-fix-pdf-import.patch
+  # Fix PDF import: Undo #0e6d526a & #72a60178
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_734201
+  # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_737123
+  - type: patch
+    path: ocrfeeder-0.8.3-fix-pdf-import-filename-length.patch
   # Flatpak-specific patches
   # Fix scanner support #0
   # Always display Scanner Chooser Dialog
