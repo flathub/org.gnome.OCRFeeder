@@ -65,7 +65,7 @@ Now you should be able to use your scanner in this flatpak package.
 
 See also:
 
-* [Similar tutorial for Paperwork](https://gitlab.gnome.org/World/OpenPaperwork/paperwork/blob/master/flatpak/README.markdown#quick-start)
+* [Similar tutorial for Paperwork](https://gitlab.gnome.org/World/OpenPaperwork/paperwork/-/blob/master/doc/install.flatpak.markdown#allowing-paperwork-to-access-scanners)
 
 ### What SANE backends are supported?
 
