@@ -15,39 +15,52 @@ sources:
   # Use GraphicsMagick instead of ImageMagick.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-graphicsmagick.patch
   - type: patch
-    path: cuneiform-1.1.0-graphicsmagick.patch
+    path: patches/cuneiform-1.1.0-graphicsmagick.patch
   # Link the leo and r35 libraries with libm.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-libm.patch
   - type: patch
-    path: cuneiform-1.1.0-libm.patch
+    path: patches/cuneiform-1.1.0-libm.patch
   # Use the standard C assert() macro, rather than custom Cuneiform one.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-c-assert.patch
   - type: patch
-    path: cuneiform-1.1.0-c-assert.patch
+    path: patches/cuneiform-1.1.0-c-assert.patch
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-size4to5.patch
   - type: patch
-    path: cuneiform-1.1.0-size4to5.patch
+    path: patches/cuneiform-1.1.0-size4to5.patch
   # Fix buffer overflow during crash when using user supplied image.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-fix_buffer_overflow.patch
   - type: patch
-    path: cuneiform-1.1.0-fix_buffer_overflow.patch
+    path: patches/cuneiform-1.1.0-fix_buffer_overflow.patch
   # Split original patch by Slawomir and update the same to apply neatly.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-fix_buffer_overflow_2.patch
   - type: patch
-    path: cuneiform-1.1.0-fix_buffer_overflow_2.patch
+    path: patches/cuneiform-1.1.0-fix_buffer_overflow_2.patch
   # Fix FTBFS with GCC 6.
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-gcc6.patch
   - type: patch
-    path: cuneiform-1.1.0-gcc6.patch
+    path: patches/cuneiform-1.1.0-gcc6.patch
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-gcc7.patch
   - type: patch
-    path: cuneiform-1.1.0-gcc7.patch
+    path: patches/cuneiform-1.1.0-gcc7.patch
   # Fix typos
   # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-typos.patch
   - type: patch
-    path: cuneiform-1.1.0-typos.patch
+    path: patches/cuneiform-1.1.0-typos.patch
   - type: shell
     commands: 
       - sed -i 's/"lib64"/"lib"/' "install_files.cmake";
 modules:
-  - GraphicsMagick.yaml
+  - name: GraphicsMagick
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --with-modules
+      - --with-threads
+      - --with-perl
+      - --with-quantum-depth=16
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/graphicsmagick/GraphicsMagick-1.3.36.tar.xz
+        sha256: 5d5b3fde759cdfc307aaf21df9ebd8c752e3f088bb051dd5df8aac7ba7338f46
+    cleanup:
+      - /share/doc/GraphicsMagick/www
