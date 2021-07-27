@@ -1,4 +1,0 @@
-name: libusb
-modules:
-  - shared-modules/libusb/libusb.json
-  - libusb0-compat.yaml
