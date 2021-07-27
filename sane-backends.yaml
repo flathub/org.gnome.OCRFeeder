@@ -1,17 +1,17 @@
 name: sane-backends
 config-opts:
   - --disable-saned
-  - --enable-avahi
+  - --with-avahi
   - --with-libcurl
   - --with-usb
   - --with-snmp
   - --with-v4l
 sources:
   - type: archive
-    url: https://gitlab.com/sane-project/backends/-/archive/1.0.29/backends-1.0.29.tar.bz2
-    sha256: dc19a3848df7b5f14afe21e6bd621cf6b555f2f88ffaefa36fc2e197511b1003
+    url: https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
+    sha256: 3a28c237c0a72767086202379f6dc92dbb63ec08dfbab22312cba80e238bb114
   - type: patch
-    path: patches/sane-backends-1.0.28-ac-init.patch
+    path: patches/sane-backends-1.0.32-ac-init.patch
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
