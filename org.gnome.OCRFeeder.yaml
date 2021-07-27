@@ -1,6 +1,6 @@
 app-id: org.gnome.OCRFeeder
 runtime: org.gnome.Platform
-runtime-version: '3.36'
+runtime-version: '40'
 sdk: org.gnome.Sdk
 command: ocrfeeder
 finish-args:
@@ -23,17 +23,14 @@ finish-args:
   # Network access
   # for scanner access via net backend
   - --share=network
-  # Dconf access
-  - --filesystem=xdg-run/dconf
-  - --filesystem=~/.config/dconf:ro
-  - --talk-name=ca.desrt.dconf
-  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  # Dconf migration
+  - --metadata=X-DConf=migrate-path=/org/gnome/ocrfeeder/
   # GVfs access
-  - --filesystem=xdg-run/gvfs:ro
+  - --filesystem=xdg-run/gvfs
+  - --filesystem=xdg-run/gvfsd
   - --talk-name=org.gtk.vfs
-  - --talk-name=org.gtk.vfs.*
   # OpenGL access
-  - --device=dri
+  # - --device=dri
   # Scanners access
   - --device=all
   # Local network host discovery

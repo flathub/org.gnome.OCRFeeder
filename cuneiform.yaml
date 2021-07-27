@@ -1,6 +1,11 @@
 name: cuneiform
 buildsystem: cmake-ninja
 builddir: true
+build-options:
+  # gcc 10 default to -fno-common which cause link errors.
+  # restore default behaviour
+  cflags: -fcommon
+  cxxflags: -fcommon
 config-opts:
   - -DCMAKE_BUILD_TYPE=RelWithDebInfo
 sources:
