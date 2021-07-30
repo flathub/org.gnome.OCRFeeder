@@ -1,17 +1,17 @@
 name: sane-backends
 config-opts:
   - --disable-saned
-  - --enable-avahi
+  - --with-avahi
   - --with-libcurl
   - --with-usb
   - --with-snmp
   - --with-v4l
 sources:
   - type: archive
-    url: https://gitlab.com/sane-project/backends/-/archive/1.0.29/backends-1.0.29.tar.bz2
-    sha256: dc19a3848df7b5f14afe21e6bd621cf6b555f2f88ffaefa36fc2e197511b1003
+    url: https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
+    sha256: 3a28c237c0a72767086202379f6dc92dbb63ec08dfbab22312cba80e238bb114
   - type: patch
-    path: sane-backends-1.0.28-ac-init.patch
+    path: patches/sane-backends-1.0.32-ac-init.patch
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
@@ -20,8 +20,46 @@ post-install:
   - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
   - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
 modules:
-  - libusb.yaml
-  - libieee1284.yaml
+  - shared-modules/libusb/libusb.json
+  - name: libusb0-compat
+    config-opts:
+      - --disable-static
+      - --disable-build-docs
+      - --with-pic
+    build-options:
+      cflags: -Wno-error
+      cxxflags: -Wno-error
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/libusb/libusb-compat-0.1.5.tar.bz2
+        sha256: 404ef4b6b324be79ac1bfb3d839eac860fbc929e6acb1ef88793a6ea328bc55a
+      # Link with -znodelete to disallow unloading
+      # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0001-Link-with-znodelete-to-disallow-unloading.patch
+      - type: patch
+        path: patches/libusb0-compat-link-with-znodelete-to-disallow-unloading.patch
+      # Revert "use atexit() to call libusb_exit()"
+      # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0002-Revert-use-atexit-to-call-libusb_exit.patch
+      - type: patch
+        path: patches/libusb0-compat-revert-use-atexit-to-call-libusb_exit.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .;
+          - autoreconf -vfi;
+  - name: libieee1284
+    config-opts:
+      - --disable-static
+      - --without-python
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/libieee1284/libieee1284-0.2.11.tar.bz2
+        sha256: 7730de107782e5d2b071bdcb5b06a44da74856f00ef4a9be85d1ba4806a38f1a
+      # https://src.fedoraproject.org/rpms/libieee1284/blob/40a545b16621a65d9446346a0aba21ccc5d63e75/f/libieee1284-strict-aliasing.patch
+      - type: patch
+        path: patches/libieee1284-strict-aliasing.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .;
+          - autoreconf -vfi;
   - net-snmp.yaml
   - avahi.yaml
   - v4l-utils.yaml

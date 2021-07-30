@@ -1,6 +1,6 @@
 app-id: org.gnome.OCRFeeder
 runtime: org.gnome.Platform
-runtime-version: '3.36'
+runtime-version: '40'
 sdk: org.gnome.Sdk
 command: ocrfeeder
 finish-args:
@@ -23,17 +23,14 @@ finish-args:
   # Network access
   # for scanner access via net backend
   - --share=network
-  # Dconf access
-  - --filesystem=xdg-run/dconf
-  - --filesystem=~/.config/dconf:ro
-  - --talk-name=ca.desrt.dconf
-  - --env=DCONF_USER_CONFIG_DIR=.config/dconf
+  # Dconf migration
+  - --metadata=X-DConf=migrate-path=/org/gnome/ocrfeeder/
   # GVfs access
-  - --filesystem=xdg-run/gvfs:ro
+  - --filesystem=xdg-run/gvfs
+  - --filesystem=xdg-run/gvfsd
   - --talk-name=org.gtk.vfs
-  - --talk-name=org.gtk.vfs.*
   # OpenGL access
-  - --device=dri
+  # - --device=dri
   # Scanners access
   - --device=all
   # Local network host discovery
@@ -50,13 +47,82 @@ finish-args:
   - --system-talk-name=org.freedesktop.DBus.Peer.Ping
   - --env=DBUS_FATAL_WARNINGS=0
 modules:
-  - OCRFeeder.yaml
-cleanup:
-  - /include
-  - /lib/pkgconfig
-  - /man
-  - /share/gtk-doc
-  - /share/man
-  - /share/pkgconfig
-  - /lib/*.la
-  - '*.a'
+  - name: OCRFeeder
+    config-opts:
+      - --enable-maintainer-mode
+      - --enable-sandbox
+    sources:
+      - type: archive
+        url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.3/ocrfeeder-0.8.3.tar.bz2
+        sha256: 691666be2d0526faf604fefba868878e12afe24925c0beed82b9ddc05cb76298
+      # Upstreamed patches
+      # Updated Spanish translation
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/3ba08ca71cb61a054eb00796bc738bf0269f72f9
+      - type: patch
+        path: ocrfeeder-0.8.3-update-translations-es-20200309.patch
+      # Updated Brazilian Portuguese translation
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/fbfe9473ad874cbc168f2f2a9ab6dff7f77735e0
+      - type: patch
+        path: ocrfeeder-0.8.3-update-translations-pt-br-20200310.patch
+      # Updated Catalan translation
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/ac8e5aec43acc435fead688134d0da9f644d2b00
+      - type: patch
+        path: ocrfeeder-0.8.3-update-translations-ca-20200310.patch
+      # Upstreamable patches
+      # Fix PDF import
+      # Handle the situation when an error occurs in convertPdfToImages()
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/8
+      - type: patch
+        path: ocrfeeder-0.8.3-fix-pdf-import.patch
+      # Fix PDF import: Undo #0e6d526a & #72a60178
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_734201
+      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_737123
+      - type: patch
+        path: ocrfeeder-0.8.3-fix-pdf-import-filename-length.patch
+      # Flatpak-specific patches
+      # Fix scanner support #0
+      # Always display Scanner Chooser Dialog
+      # https://gitlab.gnome.org/scx/ocrfeeder/commit/5236cb220e3b98cdec300db5872a877bb09a205f
+      - type: patch
+        path: ocrfeeder-0.8.1-fix-scanning-0.patch
+    post-install:
+      - |
+        icon_in="resources/icons/${FLATPAK_ID}.svg";
+        icon_out="${FLATPAK_ID}.png";
+        for s in {16,22,24,32,48,64,72,96,128,192,256,512}; do
+          [[ ! -f "${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/${icon_out}" ]] || continue;
+          rsvg-convert "${icon_in}" -w "${s}" -h "${s}" -a -f png -o "${icon_out}";
+          install -p -D -m 0644 "${icon_out}" -t "${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/";
+        done;
+    modules:
+      - sane-backends.yaml
+      - hpaio.yaml
+      - ghostscript.yaml
+      - tesseract.yaml
+      - ocrad.yaml
+      - gocr.yaml
+      - cuneiform.yaml
+      - goocanvas2.yaml
+      - djvulibre.yaml
+      - unpaper.yaml
+      - gnome-common.yaml
+      - enchant.yaml
+      - enchant2.yaml
+      - gtkspell.yaml
+      - iso-codes.yaml
+      - dictionaries.yaml
+      - python3-pyenchant.yaml
+      - python3-lxml.yaml
+      - python3-reportlab.yaml
+      - python3-python-sane.yaml
+      - python3-odfpy.yaml
+      - fonts.yaml
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+      - /man
+      - /share/gtk-doc
+      - /share/man
+      - /share/pkgconfig
+      - /lib/*.la
+      - '*.a'

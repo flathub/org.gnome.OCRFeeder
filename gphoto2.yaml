@@ -7,11 +7,11 @@ config-opts:
   - --with-drivers=all
 sources:
   - type: archive
-    url: https://downloads.sourceforge.net/gphoto/libgphoto2-2.5.23.tar.bz2
-    sha256: d8af23364aa40fd8607f7e073df74e7ace05582f4ba13f1724d12d3c97e8852d
+    url: https://downloads.sourceforge.net/gphoto/libgphoto2-2.5.27.tar.bz2
+    sha256: f8b85478c44948a0b0b52c4d4dfda2de1d7bcb7b262c76bd1ae306d9c63240d7
   # Repair reattach of kernel driver if it was unbound
   # https://src.fedoraproject.org/rpms/libgphoto2/raw/master/f/gphoto2-device-return.patch
   - type: patch
-    path: gphoto2-device-return.patch
+    path: patches/gphoto2-device-return.patch
 cleanup:
   - /share/libgphoto2_port
