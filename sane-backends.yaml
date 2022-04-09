@@ -14,8 +14,8 @@ sources:
     path: patches/sane-backends-1.0.32-ac-init.patch
   - type: shell
     commands:
-      - cp -p /usr/share/automake-*/config.{sub,guess} .;
-      - autoreconf -vfi;
+      - cp -p /usr/share/automake-*/config.{sub,guess} .
+      - autoreconf -vfi
 post-install:
   - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
   - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
@@ -36,15 +36,15 @@ modules:
       # Link with -znodelete to disallow unloading
       # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0001-Link-with-znodelete-to-disallow-unloading.patch
       - type: patch
-        path: patches/libusb0-compat-link-with-znodelete-to-disallow-unloading.patch
-      # Revert "use atexit() to call libusb_exit()"
-      # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0002-Revert-use-atexit-to-call-libusb_exit.patch
-      - type: patch
-        path: patches/libusb0-compat-revert-use-atexit-to-call-libusb_exit.patch
+        paths:
+          - patches/libusb0-compat-link-with-znodelete-to-disallow-unloading.patch
+          # Revert "use atexit() to call libusb_exit()"
+          # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0002-Revert-use-atexit-to-call-libusb_exit.patch
+          - patches/libusb0-compat-revert-use-atexit-to-call-libusb_exit.patch
       - type: shell
         commands:
-          - cp -p /usr/share/automake-*/config.{sub,guess} .;
-          - autoreconf -vfi;
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -vfi
   - name: libieee1284
     config-opts:
       - --disable-static
@@ -58,11 +58,27 @@ modules:
         path: patches/libieee1284-strict-aliasing.patch
       - type: shell
         commands:
-          - cp -p /usr/share/automake-*/config.{sub,guess} .;
-          - autoreconf -vfi;
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -vfi
   - net-snmp.yaml
   - avahi.yaml
   - v4l-utils.yaml
-  - gphoto2.yaml
+  - name: gphoto2
+    config-opts:
+      - --disable-static
+      - --disable-docs
+      - --disable-internal-docs
+      - --enable-largefile
+      - --with-drivers=all
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/gphoto/libgphoto2-2.5.29.tar.bz2
+        sha256: dbe3cefad8c634fc134d93467a33e242cb1030f0b9829deb9f1703f368ac027e
+      # Repair reattach of kernel driver if it was unbound
+      # https://src.fedoraproject.org/rpms/libgphoto2/raw/master/f/gphoto2-device-return.patch
+      - type: patch
+        path: patches/gphoto2-device-return.patch
+    cleanup:
+      - /share/libgphoto2_port
 cleanup:
   - '*.la'
