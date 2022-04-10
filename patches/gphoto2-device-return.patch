@@ -24,9 +24,9 @@ index d1535a5..c8a63f1 100644
 +#include <linux/usbdevice_fs.h>
 +#endif
 +
- #ifdef ENABLE_NLS
- #  include <libintl.h>
- #  undef _
+ #include "libgphoto2_port/i18n.h"
+ 
+ 
 -- 
 1.6.5.rc2
 

@@ -1,6 +1,6 @@
 app-id: org.gnome.OCRFeeder
 runtime: org.gnome.Platform
-runtime-version: '40'
+runtime-version: '42'
 sdk: org.gnome.Sdk
 command: ocrfeeder
 finish-args:
@@ -51,40 +51,19 @@ modules:
     config-opts:
       - --enable-maintainer-mode
       - --enable-sandbox
+      - --with-python_prefix=/app
     sources:
       - type: archive
-        url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.3/ocrfeeder-0.8.3.tar.bz2
-        sha256: 691666be2d0526faf604fefba868878e12afe24925c0beed82b9ddc05cb76298
-      # Upstreamed patches
-      # Updated Spanish translation
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/3ba08ca71cb61a054eb00796bc738bf0269f72f9
+        url: https://gitlab.gnome.org/GNOME/ocrfeeder/-/archive/0.8.5/ocrfeeder-0.8.5.tar.bz2
+        sha256: 3ec08138ae747960d67cdd30fbdaf511ed611f038a0648434d8b21dddc4f48ec
       - type: patch
-        path: ocrfeeder-0.8.3-update-translations-es-20200309.patch
-      # Updated Brazilian Portuguese translation
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/fbfe9473ad874cbc168f2f2a9ab6dff7f77735e0
-      - type: patch
-        path: ocrfeeder-0.8.3-update-translations-pt-br-20200310.patch
-      # Updated Catalan translation
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/commit/ac8e5aec43acc435fead688134d0da9f644d2b00
-      - type: patch
-        path: ocrfeeder-0.8.3-update-translations-ca-20200310.patch
-      # Upstreamable patches
-      # Fix PDF import
-      # Handle the situation when an error occurs in convertPdfToImages()
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/8
-      - type: patch
-        path: ocrfeeder-0.8.3-fix-pdf-import.patch
-      # Fix PDF import: Undo #0e6d526a & #72a60178
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_734201
-      # https://gitlab.gnome.org/GNOME/ocrfeeder/merge_requests/7#note_737123
-      - type: patch
-        path: ocrfeeder-0.8.3-fix-pdf-import-filename-length.patch
-      # Flatpak-specific patches
-      # Fix scanner support #0
-      # Always display Scanner Chooser Dialog
-      # https://gitlab.gnome.org/scx/ocrfeeder/commit/5236cb220e3b98cdec300db5872a877bb09a205f
-      - type: patch
-        path: ocrfeeder-0.8.1-fix-scanning-0.patch
+        paths:
+          # Upstreamable patches
+          # Flatpak-specific patches
+          # Fix scanner support #0
+          # Always display Scanner Chooser Dialog
+          # https://gitlab.gnome.org/scx/ocrfeeder/commit/5236cb220e3b98cdec300db5872a877bb09a205f
+          - ocrfeeder-0.8.1-fix-scanning-0.patch
     post-install:
       - |
         icon_in="resources/icons/${FLATPAK_ID}.svg";

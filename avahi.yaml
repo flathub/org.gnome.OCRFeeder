@@ -39,7 +39,24 @@ sources:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
       - autoreconf -vfi;
 modules:
-  - shared-modules/dbus-glib/dbus-glib-0.110.json
-  - libevent.yaml
-cleanup:
-  - /bin
+  - shared-modules/dbus-glib/dbus-glib.json
+  - name: libevent
+    config-opts:
+      - --enable-shared
+      - --disable-static
+      - --enable-openssl
+      - --disable-samples
+    sources:
+      - type: archive
+        url: https://github.com/libevent/libevent/releases/download/release-2.1.11-stable/libevent-2.1.11-stable.tar.gz
+        sha256: a65bac6202ea8c5609fd5c7e480e6d25de467ea1917c08290c521752f147283d
+        # Disable network tests
+        # https://src.fedoraproject.org/rpms/libevent/blob/4c1c387718ddd5284ae5170fac63b91377365ca7/f/libevent-nonettests.patch
+      - type: patch
+        path: libevent-disable-network-tests.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .;
+          - autoreconf -vfi;
+    cleanup:
+        - /bin
