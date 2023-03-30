@@ -16,7 +16,6 @@ config-opts:
   - --enable-gnutls
   - --enable-libxcb-xfixes
   - --enable-opengl
-  - --enable-sdl2
   - --enable-vaapi
   - --enable-vdpau
   - --enable-zlib
