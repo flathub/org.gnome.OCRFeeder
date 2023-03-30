@@ -46,6 +46,13 @@ finish-args:
   - --talk-name=org.freedesktop.DBus.Peer.Ping
   - --system-talk-name=org.freedesktop.DBus.Peer.Ping
   - --env=DBUS_FATAL_WARNINGS=0
+cleanup:
+  - /include
+  - /lib/cmake
+  - /man
+  - /share/doc
+  - /share/man
+  - '*.la'
 modules:
   - name: OCRFeeder
     config-opts:
