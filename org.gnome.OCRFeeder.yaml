@@ -81,8 +81,8 @@ modules:
           install -p -D -m 0644 "${icon_out}" -t "${FLATPAK_DEST}/share/icons/hicolor/${s}x${s}/apps/";
         done;
     modules:
-      - sane-backends.yaml
-      - hpaio.yaml
+      - sane-backends/sane-backends.yaml
+      - sane-backends/hpaio.yaml
       - ghostscript.yaml
       - tesseract.yaml
       - ocrad.yaml
