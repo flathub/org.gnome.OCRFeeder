@@ -5,8 +5,8 @@ config-opts:
   - --with-myspell-dir=/app/share/myspell
 sources:
   - type: archive
-    url: https://src.fedoraproject.org/lookaside/extras/enchant/enchant-1.6.0.tar.gz/de11011aff801dc61042828041fb59c7/enchant-1.6.0.tar.gz
-    sha256: 2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f
+    url: https://github.com/AbiWord/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
+    sha256: bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
