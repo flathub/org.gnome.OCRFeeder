@@ -82,7 +82,6 @@ modules:
         done;
     modules:
       - sane-backends/sane-backends.yaml
-      - sane-backends/hpaio.yaml
       - ghostscript.yaml
       - tesseract.yaml
       - ocrad.yaml
