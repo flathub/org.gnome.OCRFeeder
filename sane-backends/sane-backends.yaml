@@ -1,24 +1,12 @@
-name: sane-backends
-config-opts:
-  - --disable-saned
-  - --with-avahi
-  - --with-libcurl
-  - --with-usb
-  - --with-snmp
-  - --with-v4l
+name: all-sane-backends
+buildsystem: simple
 sources:
-  - type: archive
-    url: https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
-    sha256: 3a28c237c0a72767086202379f6dc92dbb63ec08dfbab22312cba80e238bb114
-  - type: patch
-    path: sane-backends-1.0.32-ac-init.patch
+  # We need a source so the module doesn't get skipped
   - type: shell
     commands:
-      - cp -p /usr/share/automake-*/config.{sub,guess} .
-      - autoreconf -vfi
-post-install:
-  - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
-  - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
+      - true
+build-commands:
+  - true
 modules:
   - ../shared-modules/libusb/libusb.json
   - name: libusb0-compat
@@ -91,5 +79,27 @@ modules:
         path: gphoto2-device-return.patch
     cleanup:
       - /share/libgphoto2_port
+  - name: sane-backends
+    config-opts:
+      - --disable-saned
+      - --with-avahi
+      - --with-libcurl
+      - --with-usb
+      - --with-snmp
+      - --with-v4l
+    sources:
+      - type: archive
+        url: https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
+        sha256: 3a28c237c0a72767086202379f6dc92dbb63ec08dfbab22312cba80e238bb114
+      - type: patch
+        path: sane-backends-1.0.32-ac-init.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+          - autoreconf -vfi
+    post-install:
+      - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
+      - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
+  - hpaio.yaml
 cleanup:
   - '*.la'
