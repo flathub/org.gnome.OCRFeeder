@@ -39,7 +39,7 @@ sources:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
       - autoreconf -vfi;
 modules:
-  - shared-modules/dbus-glib/dbus-glib.json
+  - ../shared-modules/dbus-glib/dbus-glib.json
   - name: libevent
     config-opts:
       - --enable-shared

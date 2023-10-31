@@ -138,7 +138,7 @@ post-install:
   - echo 'hpaio' > "hpaio";
     install -p -D -m 0644 "hpaio" -t "${FLATPAK_DEST}/etc/sane.d/dll.d/";
 modules:
-  - shared-modules/python2.7/python-2.7.json
+  - ../shared-modules/python2.7/python-2.7.json
 cleanup:
   - /lib/cups
   - /share/ppd

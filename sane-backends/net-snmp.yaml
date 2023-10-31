@@ -23,25 +23,25 @@ sources:
   - type: patch
     paths:
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-agentx-disconnect-crash.patch
-      - patches/net-snmp-5.8-agentx-disconnect-crash.patch
+      - net-snmp-5.8-agentx-disconnect-crash.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-Remove-U64-typedef.patch
-      - patches/net-snmp-5.8-Remove-U64-typedef.patch
+      - net-snmp-5.8-Remove-U64-typedef.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.7.3-iterator-fix.patch
-      - patches/net-snmp-5.7.3-iterator-fix.patch
+      - net-snmp-5.7.3-iterator-fix.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-autofs-skip.patch
-      - patches/net-snmp-5.8-autofs-skip.patch
+      - net-snmp-5.8-autofs-skip.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-key-leak-backport.patch
-      - patches/net-snmp-5.8-key-leak-backport.patch
+      - net-snmp-5.8-key-leak-backport.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-python-ld-flags.patch
-      - patches/net-snmp-5.8-python-ld-flags.patch
+      - net-snmp-5.8-python-ld-flags.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-ipv6-clientaddr.patch
-      - patches/net-snmp-5.8-ipv6-clientaddr.patch
+      - net-snmp-5.8-ipv6-clientaddr.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-agent-of-death.patch
-      - patches/net-snmp-5.8-agent-of-death.patch
+      - net-snmp-5.8-agent-of-death.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-trapsink.patch
-      - patches/net-snmp-5.8-trapsink.patch
+      - net-snmp-5.8-trapsink.patch
       # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-v3-forward.patch
-      - patches/net-snmp-5.8-v3-forward.patch
+      - net-snmp-5.8-v3-forward.patch
   - type: shell
     commands:
       - cp -p /usr/share/automake-*/config.{sub,guess} .;
