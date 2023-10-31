@@ -5,7 +5,7 @@ config-opts:
   - --with-myspell-dir=/app/share/myspell
 sources:
   - type: archive
-    url: https://www.abisource.com/downloads/enchant/1.6.0/enchant-1.6.0.tar.gz
+    url: https://src.fedoraproject.org/lookaside/extras/enchant/enchant-1.6.0.tar.gz/de11011aff801dc61042828041fb59c7/enchant-1.6.0.tar.gz
     sha256: 2fac9e7be7e9424b2c5570d8affe568db39f7572c10ed48d4e13cddf03f7097f
   - type: shell
     commands:
