@@ -101,5 +101,6 @@ modules:
       - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
       - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
   - hpaio.yaml
+  - airscan.yaml
 cleanup:
   - '*.la'
