@@ -2,7 +2,7 @@ name: vlgothic-fonts
 buildsystem: simple
 sources:
   - type: archive
-    url: https://osdn.dl.sourceforge.jp/vlgothic/62375/VLGothic-20141206.tar.bz2
+    url: https://src.fedoraproject.org/lookaside/extras/vlgothic-fonts/VLGothic-20141206.tar.bz2/f52dd264183ac33f99e89c31dd7775c6/VLGothic-20141206.tar.bz2
     sha256: 252b4c3faf6ccf315763e021edace218370154e398d95fb97abce1ca8325556c
   - type: file
     url: https://src.fedoraproject.org/rpms/vlgothic-fonts/raw/91bdaeabc6878aaf4198e0db140106e4604458fb/f/vlgothic-fonts-fontconfig-pgothic.conf
