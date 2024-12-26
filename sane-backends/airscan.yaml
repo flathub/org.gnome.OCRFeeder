@@ -3,8 +3,8 @@ buildsystem: meson
 sources:
   - type: git
     url: https://github.com/alexpevzner/sane-airscan.git
-    commit: d503e124ccb4e5774152924094fca7e67b903fcd
-    tag: 0.99.28
+    commit: a086d81a1222194804a075cac496c821023ae23a
+    tag: 0.99.31
     x-checker-data:
       type: git
       tag-pattern: ^([\d.]+)$
