@@ -5,8 +5,8 @@ config-opts:
   - --with-hunspell-dir=/app/share/hunspell
 sources:
   - type: archive
-    url: https://github.com/AbiWord/enchant/releases/download/v2.2.15/enchant-2.2.15.tar.gz
-    sha256: 3b0f2215578115f28e2a6aa549b35128600394304bd79d6f28b0d3b3d6f46c03
+    url: https://github.com/AbiWord/enchant/archive/refs/tags/v2.2.15.tar.gz
+    sha256: 85295934102a4ab94f209cbc7c956affcb2834e7a5fb2101e2db436365e2922d
   # https://src.fedoraproject.org/rpms/enchant2/blob/63318bc1310b50b0f20cec54886872c7394db1e8/f/enchant_aspell.patch
   - type: patch
     path: enchant2-2.2.8-aspell.patch
