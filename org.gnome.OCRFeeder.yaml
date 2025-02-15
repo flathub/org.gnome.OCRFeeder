@@ -71,7 +71,7 @@ modules:
           # Always display Scanner Chooser Dialog
           # https://gitlab.gnome.org/scx/ocrfeeder/commit/5236cb220e3b98cdec300db5872a877bb09a205f
           - patches/ocrfeeder-0.8.1-fix-scanning-0.patch
-          - patches/ocrfreeder-screenshot-link.patch
+          - patches/ocrfeeder-screenshot-link.patch
       - type: shell
         commands:
           # the ship AX_PYTHON_MODULE use deprecated python fron 3.4 gone in 3.12
