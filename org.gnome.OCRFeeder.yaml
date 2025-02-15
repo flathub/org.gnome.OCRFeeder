@@ -52,6 +52,7 @@ cleanup:
   - /man
   - /share/doc
   - /share/man
+  - '*.a'
   - '*.la'
 modules:
   - name: OCRFeeder
@@ -88,7 +89,47 @@ modules:
     modules:
       - sane-backends/sane-backends.yaml
       - ghostscript.yaml
-      - tesseract.yaml
+      - name: tesseract
+        config-opts:
+          - --disable-static
+          - --disable-graphics
+          - --enable-legacy
+        sources:
+          - type: archive
+            url: https://github.com/tesseract-ocr/tesseract/archive/4.1.1.tar.gz
+            sha256: 2a66ff0d8595bff8f04032165e6c936389b1e5727c3ce5a27b3e059d218db1cb
+          # The LSTM models (--oem 1) in these files have been updated to the integerized versions of tessdata_best on GitHub.
+          # So, they should be faster but probably a little less accurate than tessdata_best.
+          #- type: archive
+          #  url: https://github.com/tesseract-ocr/tessdata/archive/4.0.0.tar.gz
+          #  sha256: 38c637d3a1763f6c3d32e8f1d979f045668676ec5feb8ee1869ee77cedd31b08
+          #  dest: traineddata
+          # Fast integer versions of trained models
+          #- type: archive
+          #  url: https://github.com/tesseract-ocr/tessdata_fast/archive/4.0.0.tar.gz
+          #  sha256: f1b71e97f27bafffb6a730ee66fd9dc021afc38f318fdc80a464a84a519227fe
+          #  dest: traineddata
+          # Best (most accurate) trained LSTM models.
+          #- type: archive
+          #  url: https://github.com/tesseract-ocr/tessdata_best/archive/4.0.0.tar.gz
+          #  sha256: 5d826c8a926d06b4e19eae391949f24f3011973cc7f679c57a059054fa2d8c60
+          #  dest: traineddata
+          - type: git
+            url: https://github.com/tesseract-ocr/tessdata_best.git
+            #tag: 4.0.0
+            commit: 9e8aeef07ce8c4f6e6519577cee76363246bc6de
+            dest: traineddata
+          # Tweak location of tessdata folder
+          # https://src.fedoraproject.org/rpms/tesseract/blob/7ae0e18c8f30353dea96807a4a445d1b3aba8d74/f/tesseract_datadir.patch
+          - type: patch
+            paths:
+              - patches/tesseract-4.1.1-datadir.patch
+              - patches/tesseract-build-fix.patch
+        post-install:
+          - install -p -D -m 0644 "traineddata"/*.traineddata -t "${FLATPAK_DEST}/share/tesseract/tessdata/";
+          - install -p -D -m 0644 "traineddata/script"/*.traineddata -t "${FLATPAK_DEST}/share/tesseract/tessdata/script/";
+        modules:
+          - leptonica.yaml
 
       - name: ocrad
         sources:
@@ -105,29 +146,171 @@ modules:
           - type: patch
             path: patches/ocrad-0.25-nostatic.patch
 
-      - gocr.yaml
+      - name: gocr
+        sources:
+          # Do not update this to 0.51 or 0.52
+          - type: archive
+            url: https://www-e.uni-magdeburg.de/jschulen/ocr/gocr-0.50.tar.gz
+            sha256: bc261244f887419cba6d962ec1ad58eefd77176885093c4a43061e7fd565f5b5
+        modules:
+          - netpbm.yaml
+
       - cuneiform.yaml
-      - goocanvas2.yaml
-      - djvulibre.yaml
-      - unpaper.yaml
-      - gnome-common.yaml
-      - enchant.yaml
-      - enchant2.yaml
-      - gtkspell.yaml
-      - iso-codes.yaml
-      - dictionaries.yaml
+      - name: goocanvas2
+        rm-configure: true
+        build-options:
+          cflags: -fpermissive
+        config-opts:
+          - --enable-shared
+          - --disable-static
+          - --enable-maintainer-mode
+          - --disable-gtk-doc
+          - --with-pygi_overrides_dir=/app/lib/python3.10/site-packages/gi/overrides
+        make-install-args:
+          - girdir=/app/share/gir-1.0
+          - typelibdir=/app/lib/girepository-1.0
+        sources:
+          - type: archive
+            url: https://download.gnome.org/sources/goocanvas/2.0/goocanvas-2.0.4.tar.xz
+            sha256: c728e2b7d4425ae81b54e1e07a3d3c8a4bd6377a63cffa43006045bceaa92e90
+          - type: patch
+            path: patches/goocanvas-2.0.4-pyoverridesdir.patch
+          - type: shell
+            commands:
+              - cp -p /usr/share/automake-*/config.{sub,guess} .
+
+      - name: djvulibre
+        config-opts:
+          - --disable-desktopfiles
+          - --enable-threads
+        sources:
+          - type: archive
+            url: https://downloads.sourceforge.net/djvu/djvulibre-3.5.28.tar.gz
+            sha256: fcd009ea7654fde5a83600eb80757bd3a76998e47d13c66b54c8db849f8f2edc
+          # https://src.fedoraproject.org/rpms/djvulibre/blob/ecae4ffecbf52962c24f242361072a57f9385ae0/f/djvulibre-3.5.27-export-file.patch
+          - type: patch
+            path: patches/djvulibre-3.5.27-export-file.patch
+        cleanup:
+          - /bin
+
+      - name: unpaper
+        config-opts:
+          - --enable-maintainer-mode
+        build-options:
+          env:
+            # for offline build
+            MANPAGE_XSL: /usr/share/xml/docbook/xml/xsl-stylesheets/manpages/docbook.xsl
+        sources:
+          - type: archive
+            url: https://github.com/Flameeyes/unpaper/archive/unpaper-6.1.tar.gz
+            sha256: 213f8143b3361dde3286537eb66aaf7cdd7e4f5e7bde42ac6e91020997a81f1d
+          - type: shell
+            commands:
+              - autoreconf -vfi
+        modules:
+          - ffmpeg.yaml
+
+      - name: gnome-common
+        rm-configure: true
+        config-opts:
+          - --enable-maintainer-mode
+        sources:
+          - type: archive
+            url: https://download.gnome.org/sources/gnome-common/3.18/gnome-common-3.18.0.tar.xz
+            sha256: 22569e370ae755e04527b76328befc4c73b62bfd4a572499fde116b8318af8cf
+        cleanup:
+          - '*'
+
+      - name: enchant
+        build-options:
+          cflags: -fpermissive
+        config-opts:
+          - --disable-static
+          - --enable-myspell
+          - --with-myspell-dir=/app/share/myspell
+        sources:
+          - type: archive
+            url: https://github.com/rrthomas/enchant/releases/download/enchant-1-6-1/enchant-1.6.1.tar.gz
+            sha256: bef0d9c0fef2e4e8746956b68e4d6c6641f6b85bd2908d91731efb68eba9e3f5
+          - type: shell
+            commands:
+              - cp -p /usr/share/automake-*/config.{sub,guess} .
+        cleanup:
+          - /bin
+
+      - name: enchant2
+        config-opts:
+          - --disable-static
+          - --with-hunspell
+          - --with-hunspell-dir=/app/share/hunspell
+        sources:
+          - type: archive
+            url: https://github.com/rrthomas/enchant/releases/download/v2.2.15/enchant-2.2.15.tar.gz
+            sha256: 3b0f2215578115f28e2a6aa549b35128600394304bd79d6f28b0d3b3d6f46c03
+          # https://src.fedoraproject.org/rpms/enchant2/blob/63318bc1310b50b0f20cec54886872c7394db1e8/f/enchant_aspell.patch
+          - type: patch
+            path: enchant2-2.2.8-aspell.patch
+          - type: shell
+            commands:
+              - cp -p /usr/share/automake-*/config.{sub,guess} .
+        cleanup:
+          - /bin
+
+      - shared-modules/intltool/intltool-0.51.json
+      - name: gtkspell
+        config-opts:
+          - --disable-gtk-doc
+        sources:
+          - type: archive
+            url: https://downloads.sourceforge.net/gtkspell/gtkspell3-3.0.10.tar.xz
+            sha256: b040f63836b347eb344f5542443dc254621805072f7141d49c067ecb5a375732
+
+      - name: iso-codes
+        sources:
+          - type: archive
+            url: https://salsa.debian.org/iso-codes-team/iso-codes/-/archive/iso-codes-4.4/iso-codes-iso-codes-4.4.tar.bz2
+            sha256: c676a78bb56b47638edbe0fc35570f88705e350f03e69adbac550d743ee3a00b
+          - type: shell
+            commands:
+              - cp -p /usr/share/automake-*/config.{sub,guess} .
+
+      - name: dictionaries
+        buildsystem: simple
+        sources:
+          - type: archive
+            url: https://github.com/LibreOffice/dictionaries/archive/libreoffice-6.4.2.2.tar.gz
+            sha256: 1d2418bc06f11d8c53551c4702b0e471a42eb041f990c122b0080401f39ef5e8
+          - type: file
+            path: install-dicts.py
+          - type: file
+            path: th_gen_idx.pl
+        build-commands:
+          - python3 install-dicts.py */dictionaries.xcu;
+          - ln -s "${FLATPAK_DEST}/share/hunspell" "${FLATPAK_DEST}/share/myspell";
+
       - python3-pyenchant.yaml
       - python3-lxml.yaml
       - python3-reportlab.yaml
       - python3-python-sane.yaml
       - python3-odfpy.yaml
-      - fonts.yaml
+
+      - name: fonts
+        buildsystem: simple
+        sources:
+          - type: file
+            path: fonts.conf
+        build-commands:
+          - install -Dm644 "fonts.conf" "${FLATPAK_DEST}/etc/fonts/local.conf"
+          - fc-cache -fsv ||:;
+        modules:
+          # CJK fonts:
+          - google-droid-sans-fallback-full.yaml
+          - vlgothic-fonts.yaml
+          - naver-nanum-gothic-fonts.yaml
+          # Math symbol fonts:
+          - jsmath-fonts.yaml
+
     cleanup:
-      - /include
       - /lib/pkgconfig
-      - /man
       - /share/gtk-doc
-      - /share/man
       - /share/pkgconfig
-      - /lib/*.la
-      - '*.a'
