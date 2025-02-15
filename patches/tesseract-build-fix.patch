@@ -1,0 +1,24 @@
+diff --git a/src/ccutil/helpers.h b/src/ccutil/helpers.h
+index 9ccde82..b727549 100644
+--- a/src/ccutil/helpers.h
++++ b/src/ccutil/helpers.h
+@@ -23,6 +23,7 @@
+ 
+ #include <cassert>
+ #include <cstdio>
++#include <cstdint>
+ #include <cstring>
+ #include <functional>
+ #include <string>
+diff --git a/src/dict/matchdefs.h b/src/dict/matchdefs.h
+index 24737f0..ea25ef7 100644
+--- a/src/dict/matchdefs.h
++++ b/src/dict/matchdefs.h
+@@ -22,6 +22,7 @@
+           Include Files and Type Defines
+ ----------------------------------------------------------------------------**/
+ #include <cstdio>
++#include <cstdint>
+ #include "unichar.h"
+ 
+ /* define the maximum number of classes defined for any matcher

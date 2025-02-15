@@ -1,4 +1,6 @@
 name: enchant
+build-options:
+  cflags: -fpermissive
 config-opts:
   - --disable-static
   - --enable-myspell

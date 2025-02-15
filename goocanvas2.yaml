@@ -1,5 +1,7 @@
 name: goocanvas2
 rm-configure: true
+build-options:
+  cflags: -fpermissive
 config-opts:
   - --enable-shared
   - --disable-static
