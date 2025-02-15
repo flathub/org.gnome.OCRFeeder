@@ -2,8 +2,8 @@ name: python3-reportlab
 buildsystem: simple
 sources:
   - type: file
-    url: https://files.pythonhosted.org/packages/f8/3b/3684a3414cde1626be5245af21ace0629ceb1e38ff745a84e07349505827/reportlab-3.5.68.tar.gz
-    sha256: efef6a97e3ab49f3f40037dbf9a4166668a17cc6aaba13d5ecbabdf854a9b332
+    url: https://files.pythonhosted.org/packages/65/82/45b443db5acaf7edb471be57335a22d9f3bb6e4e9c9133ffa926f8ecdf2a/reportlab-3.6.13.tar.gz
+    sha256: 6f75d33f7a3720cf47371ab63ced0f0ebd1aeb6db19386ae92f8977a09be9611
 build-commands:
   - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} reportlab
 modules:

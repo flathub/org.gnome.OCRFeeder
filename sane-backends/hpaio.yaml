@@ -27,7 +27,7 @@ config-opts:
   - --with-cupsfilterdir=/app/lib/cups/filter
   - --with-cupsbackenddir=/app/lib/cups/backend
 build-options:
-  cflags: -I/app/include/libusb-1.0
+  cflags: -I/app/include/libusb-1.0 -fpermissive
 sources:
   - type: archive
     url: https://downloads.sourceforge.net/sourceforge/hplip/hplip-3.20.3.tar.gz

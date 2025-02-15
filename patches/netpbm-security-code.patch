@@ -624,13 +624,13 @@ diff --git a/converter/pbm/pbmtoppa/pbm.c b/converter/pbm/pbmtoppa/pbm.c
 index ae36e0d..1c8d236 100644
 --- a/converter/pbm/pbmtoppa/pbm.c
 +++ b/converter/pbm/pbmtoppa/pbm.c
-@@ -11,185 +11,128 @@
+@@ -11,185 +11,129 @@
  #include <stdio.h>
  #include <stdlib.h>
  #include <string.h>
 -#include <limits.h>
  
--#include "pm.h"
+ #include "pm.h"
 -#include "nstring.h"
  #include "ppapbm.h"
  
@@ -2236,12 +2236,13 @@ diff --git a/lib/pm.h b/lib/pm.h
 index 3fc92fb..1e30ce9 100644
 --- a/lib/pm.h
 +++ b/lib/pm.h
-@@ -441,5 +441,12 @@ pm_parse_height(const char * const arg);
+@@ -441,5 +441,13 @@ pm_parse_height(const char * const arg);
  }
  #endif
  
 +void *malloc2(int, int);
 +void *malloc3(int, int, int);
++void *realloc2(void * a, int b, int c);
 +#define overflow2(a,b) __overflow2(a,b)
 +void __overflow2(int, int);
 +void overflow3(int, int, int);

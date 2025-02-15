@@ -1,0 +1,38 @@
+diff --git a/cuneiform_src/Kern/ctb/src/ctb_oper.c b/cuneiform_src/Kern/ctb/src/ctb_oper.c
+index 2aedd58..a2e3714 100644
+--- a/cuneiform_src/Kern/ctb/src/ctb_oper.c
++++ b/cuneiform_src/Kern/ctb/src/ctb_oper.c
+@@ -61,6 +61,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ #define MAXPATH 256
+ #include<string.h>
+ #include<sys/stat.h>
++#include <ctype.h>
+ #include "ctb.h"
+ 
+ /// extern fuxntions and data
+diff --git a/cuneiform_src/Kern/dif/src/diffr.c b/cuneiform_src/Kern/dif/src/diffr.c
+index f0d89db..7d0d898 100644
+--- a/cuneiform_src/Kern/dif/src/diffr.c
++++ b/cuneiform_src/Kern/dif/src/diffr.c
+@@ -105,7 +105,7 @@ extern uchar BUFFER[256];        /* 
+ extern uchar LOCAL[50];          /* координаты     ног             */
+ extern uchar LOCAL_W[50];        /* ширины         ног             */
+ extern uchar end1,beg2;          /* конец 1 и начало 2-ой ног инп  */
+-extern broken_ii;		/* флаг двух палок			*/
++extern uchar broken_ii;		/* флаг двух палок			*/
+ extern int16_t dnri_hook; // bottom right hook in small russian italic II,III
+ extern int16_t uple_hook; // bottom left  hook in small russian italic II,III
+ extern int16_t up_jack  ; // upper jack
+diff --git a/cuneiform_src/Kern/rstr/src/diffr.c b/cuneiform_src/Kern/rstr/src/diffr.c
+index 3427806..c4ad6aa 100644
+--- a/cuneiform_src/Kern/rstr/src/diffr.c
++++ b/cuneiform_src/Kern/rstr/src/diffr.c
+@@ -168,7 +168,7 @@ extern uchar BUFFER[256];        /* 
+ extern uchar LOCAL[50];        	/* координаты     ног          		*/
+ extern uchar LOCAL_W[50];      	/* ширины         ног          		*/
+ extern uchar end1,beg2;        	/* конец 1 и начало 2-ой ног инп	*/
+-extern broken_ii;		/* флаг двух палок			*/
++extern uchar broken_ii;		/* флаг двух палок			*/
+ extern int16_t dnri_hook; // bottom right hook in small russian italic II,III
+ extern int16_t uple_hook; // bottom left  hook in small russian italic II,III
+ extern int16_t up_jack  ; // upper jack

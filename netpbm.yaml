@@ -54,8 +54,6 @@ sources:
       # https://bugzilla.redhat.com/show_bug.cgi?id=227283
       # https://bugzilla.redhat.com/show_bug.cgi?id=476989
       - patches/netpbm-fiasco-overflow.patch
-      # https://src.fedoraproject.org/rpms/netpbm/blob/6c4c7de99457978c479a1a60553bd9e178058f5c/f/netpbm-cmuwtopbm.patch
-      - patches/netpbm-cmuwtopbm.patch
       # https://src.fedoraproject.org/rpms/netpbm/blob/6c4c7de99457978c479a1a60553bd9e178058f5c/f/netpbm-pamtojpeg2k.patch
       - patches/netpbm-pamtojpeg2k.patch
       # https://src.fedoraproject.org/rpms/netpbm/blob/6c4c7de99457978c479a1a60553bd9e178058f5c/f/netpbm-libdir-so.patch
