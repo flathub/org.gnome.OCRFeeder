@@ -155,7 +155,69 @@ modules:
         modules:
           - netpbm.yaml
 
-      - cuneiform.yaml
+      # For cuneiform
+      - name: GraphicsMagick
+        config-opts:
+          - --enable-shared
+          - --disable-static
+          - --with-modules
+          - --with-threads
+          - --with-perl
+          - --with-quantum-depth=16
+        sources:
+          - type: archive
+            url: https://downloads.sourceforge.net/graphicsmagick/GraphicsMagick-1.3.45.tar.xz
+            sha256: dcea5167414f7c805557de2d7a47a9b3147bcbf617b91f5f0f4afe5e6543026b
+        cleanup:
+          - /share/doc/GraphicsMagick/www
+
+      - name: cuneiform
+        buildsystem: cmake-ninja
+        builddir: true
+        build-options:
+          # gcc 10 default to -fno-common which cause link errors.
+          # restore default behaviour
+          cflags: -fcommon -fpermissive
+          cxxflags: -fcommon
+        config-opts:
+          - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+        sources:
+          - type: archive
+            url: https://launchpad.net/cuneiform-linux/1.1/1.1/+download/cuneiform-linux-1.1.0.tar.bz2
+            sha256: 577e0d054de72086c33b4e8ae15033657776509b9a7af6eb272888eefcbdbbad
+          - type: patch
+            paths:
+              # Use GraphicsMagick instead of ImageMagick.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-graphicsmagick.patch
+              - patches/cuneiform-1.1.0-graphicsmagick.patch
+              # Link the leo and r35 libraries with libm.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-libm.patch
+              -  patches/cuneiform-1.1.0-libm.patch
+              # Use the standard C assert() macro, rather than custom Cuneiform one.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-c-assert.patch
+              - patches/cuneiform-1.1.0-c-assert.patch
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-size4to5.patch
+              - patches/cuneiform-1.1.0-size4to5.patch
+              # Fix buffer overflow during crash when using user supplied image.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-fix_buffer_overflow.patch
+              - patches/cuneiform-1.1.0-fix_buffer_overflow.patch
+              # Split original patch by Slawomir and update the same to apply neatly.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-fix_buffer_overflow_2.patch
+              - patches/cuneiform-1.1.0-fix_buffer_overflow_2.patch
+              # Fix FTBFS with GCC 6.
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-gcc6.patch
+              - patches/cuneiform-1.1.0-gcc6.patch
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-gcc7.patch
+              - patches/cuneiform-1.1.0-gcc7.patch
+              # Fix typos
+              # https://src.fedoraproject.org/rpms/cuneiform/blob/2347df0c32bde1c422aa61d0b16930f7337b0061/f/cuneiform-1.1.0-typos.patch
+              - patches/cuneiform-1.1.0-typos.patch
+              # GCC11 fix. From Gentoo
+              # https://gitweb.gentoo.org/repo/gentoo.git/commit/?id=fd8e596c6a5eab634656e265c3da5241f5ceee8c
+              - patches/cuneiform-1.1.0-gcc11.patch
+              - patches/cuneiform-1.1.0-gcc14.patch
+              - patches/cuneiform-1.1.0-cmake-libdir.patch
+
       - name: goocanvas2
         rm-configure: true
         build-options:
