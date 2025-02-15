@@ -1,0 +1,16 @@
+diff --git a/install_files.cmake b/install_files.cmake
+index c64794a..96c0a4b 100644
+--- a/install_files.cmake
++++ b/install_files.cmake
+@@ -4,11 +4,6 @@ set(INSTALL_DATADIR "${CMAKE_INSTALL_PREFIX}/${RELATIVE_DATADIR}")
+ 
+ include(CheckTypeSize)
+ check_type_size("void*" PTRSIZE)
+-if(PTRSIZE EQUAL 8 AND CMAKE_SYSTEM_NAME STREQUAL "Linux")
+-    set(LIBDIR "lib64")
+-else()
+-    set(LIBDIR "lib")
+-endif()
+ 
+ # Library versioning done as instructed in
+ # http://techbase.kde.org/index.php?title=Development/Tutorials/Creating_Libraries
