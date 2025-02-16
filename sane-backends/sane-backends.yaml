@@ -25,14 +25,13 @@ modules:
       # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0001-Link-with-znodelete-to-disallow-unloading.patch
       - type: patch
         paths:
-          - libusb0-compat-link-with-znodelete-to-disallow-unloading.patch
+          - patches/libusb0-compat-link-with-znodelete-to-disallow-unloading.patch
           # Revert "use atexit() to call libusb_exit()"
           # https://src.fedoraproject.org/rpms/libusb/blob/a3e03836500af1f30de36e0b2ebe568f2e981de9/f/0002-Revert-use-atexit-to-call-libusb_exit.patch
-          - libusb0-compat-revert-use-atexit-to-call-libusb_exit.patch
+          - patches/libusb0-compat-revert-use-atexit-to-call-libusb_exit.patch
       - type: shell
         commands:
           - cp -p /usr/share/automake-*/config.{sub,guess} .
-          - autoreconf -vfi
   - name: libieee1284
     config-opts:
       - --disable-static
@@ -43,12 +42,58 @@ modules:
         sha256: 7730de107782e5d2b071bdcb5b06a44da74856f00ef4a9be85d1ba4806a38f1a
       # https://src.fedoraproject.org/rpms/libieee1284/blob/40a545b16621a65d9446346a0aba21ccc5d63e75/f/libieee1284-strict-aliasing.patch
       - type: patch
-        path: libieee1284-strict-aliasing.patch
+        path: patches/libieee1284-strict-aliasing.patch
       - type: shell
         commands:
           - cp -p /usr/share/automake-*/config.{sub,guess} .
-          - autoreconf -vfi
-  - net-snmp.yaml
+  - name: net-snmp
+    no-parallel-make: true
+    config-opts:
+      - --disable-static
+      - --disable-embedded-perl
+      - --without-perl-modules
+      - --without-rpm
+      - --enable-ucd-snmp-compatibility
+      - --enable-ipv6
+      #- --enable-as-needed
+      - --with-openssl
+      - --with-pic
+      - --with-default-snmp-version=3
+      - --with-sys-contact=root@localhost
+    build-options:
+      # /usr/lib/gcc/x86_64-unknown-linux-gnu/8.3.0/../../../../x86_64-unknown-linux-gnu/bin/ld: .libs/snmpps.o: undefined reference to symbol 'cbreak'
+      # /usr/lib/gcc/x86_64-unknown-linux-gnu/8.3.0/../../../../x86_64-unknown-linux-gnu/bin/ld: /usr/lib/x86_64-linux-gnu/libtinfo.so.6: error adding symbols: DSO missing from command line
+      ldflags: -lncurses -ltinfo
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/net-snmp/net-snmp-5.8.tar.gz
+        sha256: b2fc3500840ebe532734c4786b0da4ef0a5f67e51ef4c86b3345d697e4976adf
+      - type: patch
+        paths:
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-agentx-disconnect-crash.patch
+          - patches/net-snmp-5.8-agentx-disconnect-crash.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-Remove-U64-typedef.patch
+          - patches/net-snmp-5.8-Remove-U64-typedef.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.7.3-iterator-fix.patch
+          - patches/net-snmp-5.7.3-iterator-fix.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-autofs-skip.patch
+          - patches/net-snmp-5.8-autofs-skip.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-key-leak-backport.patch
+          - patches/net-snmp-5.8-key-leak-backport.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-python-ld-flags.patch
+          - patches/net-snmp-5.8-python-ld-flags.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-ipv6-clientaddr.patch
+          - patches/net-snmp-5.8-ipv6-clientaddr.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-agent-of-death.patch
+          - patches/net-snmp-5.8-agent-of-death.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-trapsink.patch
+          - patches/net-snmp-5.8-trapsink.patch
+          # https://src.fedoraproject.org/rpms/net-snmp/blob/55bd9e1c4975cf8b6040c196308518147d4440e3/f/net-snmp-5.8-v3-forward.patch
+          - patches/net-snmp-5.8-v3-forward.patch
+      - type: shell
+        commands:
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
+
   - avahi.yaml
   - name: v4l-utils
     config-opts:
@@ -76,7 +121,7 @@ modules:
       # Repair reattach of kernel driver if it was unbound
       # https://src.fedoraproject.org/rpms/libgphoto2/raw/master/f/gphoto2-device-return.patch
       - type: patch
-        path: gphoto2-device-return.patch
+        path: patches/gphoto2-device-return.patch
     cleanup:
       - /share/libgphoto2_port
   - name: sane-backends
@@ -92,15 +137,21 @@ modules:
         url: https://gitlab.com/sane-project/backends/uploads/104f09c07d35519cc8e72e604f11643f/sane-backends-1.0.32.tar.gz
         sha256: 3a28c237c0a72767086202379f6dc92dbb63ec08dfbab22312cba80e238bb114
       - type: patch
-        path: sane-backends-1.0.32-ac-init.patch
+        path: patches/sane-backends-1.0.32-ac-init.patch
       - type: shell
         commands:
           - cp -p /usr/share/automake-*/config.{sub,guess} .
-          - autoreconf -vfi
     post-install:
       - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
       - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
   - hpaio.yaml
-  - airscan.yaml
-cleanup:
-  - '*.la'
+  - name: sane-airscan
+    buildsystem: meson
+    sources:
+      - type: git
+        url: https://github.com/alexpevzner/sane-airscan.git
+        commit: 1ff182b4c980d1e76b27d5875006790cb59d73f3
+        tag: 0.99.32
+        x-checker-data:
+          type: git
+          tag-pattern: ^([\d.]+)$
