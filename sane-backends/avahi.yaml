@@ -36,8 +36,7 @@ sources:
     sha256: 060309d7a333d38d951bc27598c677af1796934dbd98e1024e7ad8de798fedda
   - type: shell
     commands:
-      - cp -p /usr/share/automake-*/config.{sub,guess} .;
-      - autoreconf -vfi;
+      - cp -p /usr/share/automake-*/config.{sub,guess} .
 modules:
   - ../shared-modules/dbus-glib/dbus-glib.json
   - name: libevent
@@ -53,10 +52,9 @@ modules:
         # Disable network tests
         # https://src.fedoraproject.org/rpms/libevent/blob/4c1c387718ddd5284ae5170fac63b91377365ca7/f/libevent-nonettests.patch
       - type: patch
-        path: libevent-disable-network-tests.patch
+        path: patches/libevent-disable-network-tests.patch
       - type: shell
         commands:
-          - cp -p /usr/share/automake-*/config.{sub,guess} .;
-          - autoreconf -vfi;
+          - cp -p /usr/share/automake-*/config.{sub,guess} .
     cleanup:
         - /bin
