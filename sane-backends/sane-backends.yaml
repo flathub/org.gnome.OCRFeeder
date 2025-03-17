@@ -142,16 +142,18 @@ modules:
         commands:
           - cp -p /usr/share/automake-*/config.{sub,guess} .
     post-install:
-      - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf" || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
-      - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf" || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
+      - grep '^[[:blank:]]*localhost[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/net.conf"
+        || echo 'localhost' >> "${FLATPAK_DEST}/etc/sane.d/net.conf";
+      - grep '^[[:blank:]]*net[[:blank:]]*$' "${FLATPAK_DEST}/etc/sane.d/dll.conf"
+        || echo 'net' >> "${FLATPAK_DEST}/etc/sane.d/dll.conf";
   - hpaio.yaml
   - name: sane-airscan
     buildsystem: meson
     sources:
       - type: git
         url: https://github.com/alexpevzner/sane-airscan.git
-        commit: 1ff182b4c980d1e76b27d5875006790cb59d73f3
-        tag: 0.99.32
+        commit: 0ed6a1421352c94d10ca23cec55c4e390f62c316
+        tag: 0.99.33
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
