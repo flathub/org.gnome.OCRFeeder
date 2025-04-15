@@ -152,8 +152,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/alexpevzner/sane-airscan.git
-        commit: 0ed6a1421352c94d10ca23cec55c4e390f62c316
-        tag: 0.99.33
+        commit: 6e5222c32133793f2e06bf9caa0d36d39f8ef254
+        tag: 0.99.34
         x-checker-data:
           type: git
           tag-pattern: ^([\d.]+)$
