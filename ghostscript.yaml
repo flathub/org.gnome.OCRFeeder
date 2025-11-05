@@ -11,6 +11,7 @@ config-opts:
 # https://github.com/imagemin/optipng-bin/issues/97#issue-317622868
 # https://discourse.libsdl.org/t/ndk-sdl2-image-libpng-build-error-png-init-filter-functions-neon/24947/3
 build-options:
+  cflags: -std=gnu17
   arch:
     aarch64:
       cppflags: -DPNG_ARM_NEON_OPT=0

@@ -1,6 +1,6 @@
 app-id: org.gnome.OCRFeeder
 runtime: org.gnome.Platform
-runtime-version: '47'
+runtime-version: '49'
 sdk: org.gnome.Sdk
 command: ocrfeeder
 finish-args:
@@ -179,9 +179,10 @@ modules:
         build-options:
           # gcc 10 default to -fno-common which cause link errors.
           # restore default behaviour
-          cflags: -fcommon -fpermissive
+          cflags: -fcommon -fpermissive -std=gnu17
           cxxflags: -fcommon
         config-opts:
+          - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
           - -DCMAKE_BUILD_TYPE=RelWithDebInfo
         sources:
           - type: archive
@@ -221,7 +222,7 @@ modules:
               - patches/cuneiform-1.1.0-cmake-libdir.patch
 
       - name: goocanvas2
-        rm-configure: true
+        no-autogen: true
         build-options:
           cflags: -fpermissive
         config-opts:
@@ -229,7 +230,7 @@ modules:
           - --disable-static
           - --enable-maintainer-mode
           - --disable-gtk-doc
-          - --with-pygi_overrides_dir=/app/lib/python3.10/site-packages/gi/overrides
+          - --with-pygi_overrides_dir=/app/lib/python3.13/site-packages/gi/overrides
         make-install-args:
           - girdir=/app/share/gir-1.0
           - typelibdir=/app/lib/girepository-1.0
@@ -242,6 +243,7 @@ modules:
           - type: shell
             commands:
               - cp -p /usr/share/automake-*/config.{sub,guess} .
+              - autoreconf -fvi
 
       - name: djvulibre
         config-opts:
@@ -317,6 +319,7 @@ modules:
           - type: shell
             commands:
               - cp -p /usr/share/automake-*/config.{sub,guess} .
+              - autoreconf -vfi
         cleanup:
           - /bin
 
@@ -373,7 +376,14 @@ modules:
           - naver-nanum-gothic-fonts.yaml
           # Math symbol fonts:
           - jsmath-fonts.yaml
-
+      - name: python3-imghdr
+        buildsystem: simple
+        build-commands:
+          - pip3 install --no-index --find-links="file://${PWD}" --prefix=/app --no-build-isolation standard-imghdr
+        sources:
+          - type: file
+            url: https://files.pythonhosted.org/packages/1a/8d/ab2620fbe2e348483c9cb776c3b7b3cc407899291a041d7fa026469b7cd1/standard_imghdr-3.13.0.tar.gz
+            sha256: 8d9c68058d882f6fc3542a8d39ef9ff94d2187dc90bd0c851e0902776b7b7a42
     cleanup:
       - /lib/pkgconfig
       - /share/gtk-doc
