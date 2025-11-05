@@ -1,4 +1,7 @@
 name: netpbm
+build-options:
+  env:
+    CFLAGS_PERSONAL: -std=gnu17
 sources:
   #- type: archive
   #  url: https://downloads.sourceforge.net/netpbm/netpbm-10.73.30.tgz

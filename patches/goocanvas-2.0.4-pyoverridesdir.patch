@@ -1,7 +1,21 @@
-diff -Naur goocanvas-2.0.4.orig/configure goocanvas-2.0.4/configure
---- goocanvas-2.0.4.orig/configure	2017-10-10 09:53:27.000000000 +0200
-+++ goocanvas-2.0.4/configure	2020-01-11 23:47:57.907191940 +0100
-@@ -842,6 +842,7 @@
+diff --git a/Makefile.am b/Makefile.am
+index 273e4d3..a9e8576 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -5,6 +5,8 @@ SUBDIRS = src demo docs po bindings
+ # require automake 1.7
+ AUTOMAKE_OPTIONS = 1.7
+ 
++ACLOCAL_AMFLAGS = -I m4
++
+ DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
+ 
+ pkgconfigdir = $(libdir)/pkgconfig
+diff --git a/configure b/configure
+index 76af8b1..ee2da07 100755
+--- a/configure
++++ b/configure
+@@ -842,6 +842,7 @@ with_libintl_prefix
  enable_introspection
  enable_rebuilds
  enable_python
@@ -9,7 +23,7 @@ diff -Naur goocanvas-2.0.4.orig/configure goocanvas-2.0.4/configure
  with_html_dir
  enable_gtk_doc
  enable_gtk_doc_html
-@@ -1522,6 +1523,8 @@
+@@ -1522,6 +1523,8 @@ Optional Packages:
    --without-libiconv-prefix     don't search for libiconv in includedir and libdir
    --with-libintl-prefix[=DIR]  search for libintl in DIR/include and DIR/lib
    --without-libintl-prefix     don't search for libintl in includedir and libdir
@@ -18,7 +32,7 @@ diff -Naur goocanvas-2.0.4.orig/configure goocanvas-2.0.4/configure
    --with-html-dir=PATH    path to installed docs
  
  Some influential environment variables:
-@@ -15157,7 +15160,21 @@
+@@ -15157,7 +15160,21 @@ $as_echo "yes" >&6; }
  
  fi
  
@@ -41,16 +55,63 @@ diff -Naur goocanvas-2.0.4.orig/configure goocanvas-2.0.4/configure
  
  fi
  
-diff -Naur goocanvas-2.0.4.orig/configure.ac goocanvas-2.0.4/configure.ac
---- goocanvas-2.0.4.orig/configure.ac	2017-10-10 09:48:21.000000000 +0200
-+++ goocanvas-2.0.4/configure.ac	2020-01-11 23:46:46.885566463 +0100
-@@ -101,7 +101,16 @@
+diff --git a/configure.ac b/configure.ac
+index a67755b..bdcfff0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1,10 +1,11 @@
+ dnl Process this file with autoconf to produce a configure script.
+ 
+-AC_INIT(goocanvas, 2.0.4)
+-AC_PREREQ(2.50)
++AC_INIT([goocanvas],[2.0.4])
++AC_PREREQ([2.72])
+ AC_CONFIG_SRCDIR(src/goocanvas.c)
+ AC_CONFIG_HEADERS(config.h)
+ AM_INIT_AUTOMAKE
++AC_CONFIG_MACRO_DIRS([m4])
+ 
+ # Libtool versioning - only update before a public release.
+ # If the code has changed at all: REVISION++.
+@@ -21,10 +22,18 @@ AC_SUBST(LT_VERSION_INFO)
+ 
+ AM_MAINTAINER_MODE
+ 
+-AC_ISC_POSIX
++AC_SEARCH_LIBS([strerror],[cposix])
+ AC_PROG_CC
+-AC_HEADER_STDC
+-AM_PROG_LIBTOOL
++m4_warn([obsolete],
++[The preprocessor macro 'STDC_HEADERS' is obsolete.
++  Except in unusual embedded environments, you can safely include all
++  C89 headers unconditionally.])dnl
++# Autoupdate added the next two lines to ensure that your configure
++# script's behavior did not change.  They are probably safe to remove.
++AC_CHECK_INCLUDES_DEFAULT
++AC_PROG_EGREP
++
++LT_INIT
+ 
+ m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
+ 
+@@ -59,8 +68,7 @@ if test "x$found_introspection" = "xyes"; then
+ fi
+ 
+ AC_ARG_ENABLE(rebuilds,
+-              [AC_HELP_STRING([--disable-rebuilds],
+-                              [disable all source autogeneration rules])],,
++              [AS_HELP_STRING([--disable-rebuilds],[disable all source autogeneration rules])],,
+               [enable_rebuilds=yes])
+ 
+ # define a MAINT-like variable REBUILD which is set if Perl
+@@ -101,7 +109,16 @@ fi
  if test "x$enable_python" = "xyes"; then
  	PKG_CHECK_MODULES(PYTHON, [pygobject-3.0 >= $PYGOBJECT_REQUIRED])
  
 -	pyoverridesdir=`$PYTHON -c "import gi;print (gi._overridesdir)"`
 +	AC_ARG_WITH([pygi_overrides_dir],
-+				AC_HELP_STRING([--with-pygi-overrides-dir], [Path to pygobject overrides directory]))
++				AS_HELP_STRING([--with-pygi-overrides-dir],[Path to pygobject overrides directory]))
 +
 +	AC_MSG_CHECKING(for pygobject overrides directory)
 +	if test "x$with_pygi_overrides_dir" = "x" ; then
@@ -61,4 +122,19 @@ diff -Naur goocanvas-2.0.4.orig/configure.ac goocanvas-2.0.4/configure.ac
 +
  	AC_SUBST(pyoverridesdir)
  fi
+ 
+@@ -109,7 +126,7 @@ AM_CONDITIONAL(ENABLE_PYTHON, test x"$enable_python" = "xyes")
+ 
+ GTK_DOC_CHECK(1.16)
+ 
+-AC_OUTPUT([
++AC_CONFIG_FILES([
+ Makefile
+ src/Makefile
+ demo/Makefile
+@@ -119,4 +136,5 @@ bindings/python/Makefile
+ po/Makefile.in
+ goocanvas-2.0.pc
+ ])
++AC_OUTPUT
  

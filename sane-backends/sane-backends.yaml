@@ -8,7 +8,6 @@ sources:
 build-commands:
   - true
 modules:
-  - ../shared-modules/libusb/libusb.json
   - name: libusb0-compat
     config-opts:
       - --disable-static
@@ -125,6 +124,9 @@ modules:
     cleanup:
       - /share/libgphoto2_port
   - name: sane-backends
+    rm-configure: true
+    build-options:
+      cflags: -std=gnu17
     config-opts:
       - --disable-saned
       - --with-avahi
