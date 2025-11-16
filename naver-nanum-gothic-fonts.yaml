@@ -5,6 +5,9 @@ sources:
   - type: archive
     url: https://deb.debian.org/debian/pool/main/f/fonts-nanum/fonts-nanum_20180306.orig.tar.xz
     sha256: 2761e62f3f3f500c7a50d40d5ee8bbd87abe22ab42a78df0496cf80c95fec6f0
+    mirror-urls:
+      # The debian hosted file is gone. Use our hosted version.
+      - https://github.com/flathub/org.gnome.OCRFeeder/releases/download/deps/fonts-nanum_20180306.orig.tar.xz
   # http://help.naver.com/ops/step2/faq.nhn?faqId=15879
   - type: file
     url: https://src.fedoraproject.org/rpms/naver-nanum-fonts/raw/536cba4d34121266ff18f8f02b8e8ea39a042c98/f/naver-nanum-fonts-license.txt
